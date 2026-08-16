@@ -1,34 +1,19 @@
-🐱 How to Join CAT SMP
+# Cat SMP Website
 
-IP: CatSMPgg.aternos.me
-Bedrock Port: 34018
+A lightweight, data-driven website and configuration manager for the Cat SMP Minecraft server, styled with a Minecraft aesthetic (yellow, grey, white, and thick black borders).
 
-💻 Java
+## 🚀 Features
 
-1. Open Minecraft Java.
-2. Go to Multiplayer → Add Server.
-3. Put CatSMPgg.aternos.me in the Server Address.
-4. Click Done and join the server.
+* **YAML-Driven Architecture**: Site structure, menu buttons, and instructions are cleanly separated into YAML configuration files (`mainmenu.yaml`, `shop.yaml`, `vote.yaml`).
+* **Cross-Platform Join Guide**: Built-in instructions for Java, Bedrock, and PlayStation players.
+* **Quick Access Links**: Direct access to the live server status monitor and community Discord.
 
-📱 Bedrock
+---
 
-1. Open Minecraft Bedrock.
-2. Go to Play → Servers → Add Server.
-3. Server Address: CatSMPgg.aternos.me
-4. Port: 34018
-5. Save it and join.
+## 📁 Project Structure
 
-🎮 PlayStation (Bedrock Online)
-
-1. Download/open Bedrock Online on your phone.
-2. Make sure your phone and PlayStation are on the same Wi-Fi.
-3. Add the server in Bedrock Online:
-    * IP: CatSMPgg.aternos.me
-    * Port: 34018
-4. Start the connection in Bedrock Online.
-5. Open Minecraft on your PlayStation.
-6. Go to Play → Worlds.
-7. You should see the Bedrock Online world there.
-8. Join it and you should be on CAT SMP.
-
-That’s it, enjoy CAT SMP 🐱
+```text
+├── package.json      # Node.js dependencies configuration
+├── mainmenu.yaml     # Main menu configuration and joining guide
+├── shop.yaml         # Store page configuration
+└── vote.yaml         # Voting page configuration
