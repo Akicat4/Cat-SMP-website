@@ -1,25 +1,13 @@
 {
   "name": "cat-smp-website",
   "version": "1.0.0",
-  "description": "Cat SMP server website and configuration manager",
+  "description": "Cat SMP Minecraft server website",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "js-yaml": "^4.1.0"
-  },
-  "keywords": [
-    "minecraft",
-    "smp",
-    "yaml"
-  ],
-  "author": "aki",
-  "license": "MIT"
-}
-
-{
-  "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "yaml": "^2.4.0"
   }
 }
