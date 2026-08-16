@@ -1,0 +1,5 @@
+# Cat SMP Store Page Configuration
+page: "Store"
+status: "Coming soon! Get your ranks and items here."
+back_to: "mainmenu.yaml"
+
