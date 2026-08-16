@@ -34,29 +34,29 @@ app.get('/', (req, res) => {
         }
         .button-container {
           display: flex;
-          justify-content: center;
-          gap: 20px;
-          flex-wrap: wrap;
+          flex-direction: column;
+          align-items: center;
+          gap: 15px;
+          max-width: 300px;
+          margin: 0 auto;
         }
         .btn {
-          background-color: #4CAF50;
-          color: white;
-          padding: 15px 30px;
+          background-color: #ffcc00;
+          color: #1a1a1a;
+          width: 100%;
+          padding: 15px 0;
           text-decoration: none;
           font-size: 1.1rem;
           font-weight: bold;
           border-radius: 8px;
           transition: background 0.2s, transform 0.2s;
           box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+          display: inline-block;
         }
         .btn:hover {
-          background-color: #45a049;
+          background-color: #e6b800;
           transform: translateY(-2px);
         }
-        .btn-shop { background-color: #2196F3; }
-        .btn-shop:hover { background-color: #0b7dda; }
-        .btn-vote { background-color: #ff9800; }
-        .btn-vote:hover { background-color: #e68900; }
       </style>
     </head>
     <body>
@@ -64,9 +64,10 @@ app.get('/', (req, res) => {
       <p>Welcome to the official Cat SMP website! Jump into the action below.</p>
       
       <div class="button-container">
-        <a href="#" class="btn" onclick="alert('Server IP copied: play.catsmp.com')">Copy Server IP</a>
-        <a href="/shop" class="btn btn-shop">Store</a>
-        <a href="/vote" class="btn btn-vote">Vote</a>
+        <a href="https://discord.gg/YZTjWw3h9" target="_blank" class="btn">Join Discord</a>
+        <a href="https://cat-01.onrender.com" target="_blank" class="btn">Server Status</a>
+        <a href="/shop" class="btn">Store</a>
+        <a href="/vote" class="btn">Vote</a>
       </div>
     </body>
     </html>
