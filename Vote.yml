@@ -1,0 +1,5 @@
+# Cat SMP Vote Page Configuration
+page: "Vote"
+status: "Support the server by voting on these links (Coming soon!)."
+back_to: "mainmenu.yaml"
+
