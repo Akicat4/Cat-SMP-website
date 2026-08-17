@@ -147,7 +147,7 @@ app.get('/', (req, res) => {
   `);
 });
 
-// Shop Route
+// Shop Main Route with the 3 Buttons
 app.get('/shop', (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -162,13 +162,90 @@ app.get('/shop', (req, res) => {
       <h1>Cat SMP Store</h1>
       <p>Support the server and get cool perks!</p>
       
+      <div class="button-container">
+        <a href="/shop/currency" class="btn">Currency</a>
+        <a href="/shop/rank" class="btn">Rank</a>
+        <a href="/shop/coming-soon" class="btn">Coming soon</a>
+      </div>
+      
+      <a href="/" class="back-home">← Back to Home</a>
+    </body>
+    </html>
+  `);
+});
+
+// Shop Sub-Route: Currency
+app.get('/shop/currency', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Cat SMP - Currency</title>
+      ${siteStyles}
+    </head>
+    <body>
+      <h1>Store - Currency</h1>
+      <p>In-game currency items.</p>
+      
       <div class="content-box">
-        <h2>🛒 Store Coming Soon</h2>
-        <p style="text-align: center; color: #cccccc;">We are currently setting up our ranks and items. Check back later!</p>
+        <h2>💰 Currency</h2>
+        <p style="text-align: center; color: #cccccc;">This is empty, please comeback later!</p>
       </div>
       
       <br>
-      <a href="/" class="back-home">← Back to Home</a>
+      <a href="/shop" class="back-home">← Back to Store</a>
+    </body>
+    </html>
+  `);
+});
+
+// Shop Sub-Route: Rank
+app.get('/shop/rank', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Cat SMP - Rank</title>
+      ${siteStyles}
+    </head>
+    <body>
+      <h1>Store - Ranks</h1>
+      <p>Unlock awesome server ranks!</p>
+      
+      <div class="content-box">
+        <h2>👑 Rank</h2>
+        <p style="text-align: center; color: #cccccc;">Working on it, please comeback.</p>
+      </div>
+      
+      <br>
+      <a href="/shop" class="back-home">← Back to Store</a>
+    </body>
+    </html>
+  `);
+});
+
+// Shop Sub-Route: Coming Soon (Empty black page)
+app.get('/shop/coming-soon', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Cat SMP - Coming Soon</title>
+      <style>
+        body {
+          background-color: #1a1a1a;
+          margin: 0;
+          padding: 0;
+        }
+      </style>
+    </head>
+    <body>
     </body>
     </html>
   `);
@@ -204,4 +281,4 @@ app.get('/vote', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Cat SMP server is running on port ${PORT}`);
 });
-  
+                  
