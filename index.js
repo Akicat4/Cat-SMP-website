@@ -6,11 +6,19 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Reusable styling with the new Deep Cyber-Dark Gradient background
+// Reusable styling with a custom CSS Cat Fur pattern background
 const siteStyles = `
   <style>
     body {
-      background: linear-gradient(135deg, #121212 0%, #1e1e24 50%, #0d0d0f 100%);
+      background-color: #c88a51;
+      background-image: 
+        linear-gradient(45deg, rgba(160, 90, 40, 0.4) 25%, transparent 25%), 
+        linear-gradient(-45deg, rgba(160, 90, 40, 0.4) 25%, transparent 25%), 
+        linear-gradient(45deg, transparent 75%, rgba(80, 80, 90, 0.4) 75%), 
+        linear-gradient(-45deg, transparent 75%, rgba(80, 80, 90, 0.4) 75%),
+        radial-gradient(circle, rgba(210, 140, 80, 0.6) 0%, rgba(100, 100, 110, 0.5) 100%);
+      background-size: 60px 60px;
+      background-position: 0 0, 0 30px, 30px -30px, -30px 0px, 0 0;
       background-attachment: fixed;
       color: #ffffff;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -21,12 +29,13 @@ const siteStyles = `
       color: #ffcc00;
       font-size: 3rem;
       margin-bottom: 10px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
     }
     p {
-      color: #b0b0b0;
+      color: #e0e0e0;
       font-size: 1.2rem;
       margin-bottom: 40px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
     }
     .button-container {
       display: flex;
@@ -46,7 +55,7 @@ const siteStyles = `
       font-weight: bold;
       border-radius: 8px;
       transition: background 0.2s, transform 0.2s;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.4);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -63,12 +72,12 @@ const siteStyles = `
       max-width: 600px;
       margin: 0 auto;
       text-align: left;
-      background-color: rgba(36, 36, 36, 0.85);
+      background-color: rgba(26, 26, 26, 0.9);
       backdrop-filter: blur(5px);
       padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.6);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.7);
+      border: 1px solid rgba(255, 204, 0, 0.2);
     }
     .content-box h2 {
       color: #ffcc00;
@@ -81,6 +90,7 @@ const siteStyles = `
       color: #ffcc00;
       text-decoration: none;
       font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
     }
     .back-home:hover {
       text-decoration: underline;
@@ -335,4 +345,4 @@ app.get('/vote/links', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Cat SMP server is running on port ${PORT}`);
 });
-    
+           
