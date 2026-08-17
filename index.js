@@ -46,6 +46,8 @@ const siteStyles = `
       transition: background 0.2s, transform 0.2s;
       box-shadow: 0 4px 6px rgba(0,0,0,0.3);
       display: inline-block;
+      border: none;
+      cursor: pointer;
     }
     .btn:hover {
       background-color: #e6b800;
@@ -278,7 +280,7 @@ app.get('/shop/coming-soon', (req, res) => {
   `);
 });
 
-// Vote Route with Click-to-Verify Supporter Flow
+// Main Vote Route with "Vote Links" Button + Ad Trigger
 app.get('/vote', (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -294,14 +296,13 @@ app.get('/vote', (req, res) => {
       <p>Support the server and earn in-game vote keys!</p>
       
       <div class="content-box">
-        <h2>⭐ Voting & Support Steps</h2>
+        <h2>⭐ Vote Gateway</h2>
         <p style="text-align: center; color: #cccccc; font-size: 1rem; margin-bottom: 20px;">
-          1. View the sponsor ad below to help keep Cat SMP online!<br>
-          2. Click your preferred voting link once ready.
+          Click the button below to view sponsor ads and access all voting links!
         </p>
 
         <div class="button-container" style="margin: 20px auto;">
-          <a href="#" target="_blank" class="btn">Vote Link 1 (Coming Soon)</a>
+          <a href="/vote/links" target="_blank" onclick="window.location.href='/vote/links';" class="btn">Vote Links</a>
         </div>
 
         ${adBannerHTML}
@@ -314,7 +315,43 @@ app.get('/vote', (req, res) => {
   `);
 });
 
+// Secondary Vote Page: Actual Voting Links List
+app.get('/vote/links', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Cat SMP - Voting Links</title>
+      ${siteStyles}
+    </head>
+    <body>
+      <h1>Cat SMP Voting Links</h1>
+      <p>Vote on the links below to claim your rewards in-game!</p>
+      
+      <div class="content-box">
+        <h2>🗳️ Active Vote Links</h2>
+        <p style="text-align: center; color: #cccccc; margin-bottom: 20px;">
+          Click each link to place your vote for Cat SMP:
+        </p>
+        
+        <div class="button-container" style="margin: 20px auto;">
+          <!-- Replace '#' with your actual Minecraft voting site URLs when ready -->
+          <a href="#" target="_blank" class="btn">Minecraft Server List</a>
+          <a href="#" target="_blank" class="btn">Planet Minecraft</a>
+          <a href="#" target="_blank" class="btn">TopG Vote</a>
+        </div>
+      </div>
+      
+      <br>
+      <a href="/vote" class="back-home">← Back to Vote Page</a>
+    </body>
+    </html>
+  `);
+});
+
 app.listen(PORT, () => {
   console.log(`Cat SMP server is running on port ${PORT}`);
 });
-           
+        
