@@ -6,6 +6,12 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Middleware to read form data
+app.use(express.urlencoded({ extended: true }));
+
+// Temporary memory array to store tickets while the server is running
+const ticketStorage = [];
+
 // Reusable styling with the Cat Fur background and Hamburger Menu styles
 const siteStyles = `
   <style>
@@ -25,8 +31,9 @@ const siteStyles = `
       text-align: center;
       padding: 50px 20px;
       position: relative;
+      min-height: 100vh;
+      box-sizing: border-box;
     }
-    /* Hamburger Menu Styles */
     .menu-container {
       position: absolute;
       top: 20px;
@@ -78,7 +85,6 @@ const siteStyles = `
       color: #1a1a1a;
       font-weight: bold;
     }
-    
     h1 {
       color: #ffcc00;
       font-size: 3rem;
@@ -139,6 +145,30 @@ const siteStyles = `
       text-align: center;
       margin-top: 0;
     }
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    .form-group label {
+      display: block;
+      color: #ffcc00;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background-color: rgba(18, 18, 18, 0.8);
+      color: #ffffff;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    .form-group textarea {
+      resize: vertical;
+      height: 120px;
+    }
     .back-home {
       display: inline-block;
       margin-top: 30px;
@@ -157,6 +187,26 @@ const siteStyles = `
       align-items: center;
       overflow: hidden;
     }
+    .secret-admin-trigger {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      width: 30px;
+      height: 30px;
+      background: transparent;
+      border: none;
+      z-index: 9999;
+      cursor: pointer;
+    }
+    .ticket-item {
+      padding: 15px 0;
+      text-align: left;
+    }
+    .ticket-divider {
+      border: none;
+      border-top: 2px solid rgba(255, 204, 0, 0.3);
+      margin: 15px 0;
+    }
   </style>
 
   <script>
@@ -168,7 +218,6 @@ const siteStyles = `
         box.style.display = "block";
       }
     }
-    // Close menu if clicked outside
     window.onclick = function(event) {
       if (!event.target.matches('.hamburger-btn')) {
         var dropdowns = document.getElementsByClassName("dropdown-box");
@@ -182,28 +231,24 @@ const siteStyles = `
   </script>
 `;
 
-// Reusable navbar component for top left
 const hamburgerHTML = `
   <div class="menu-container" onclick="event.stopPropagation()">
     <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
     <div id="dropdownMenu" class="dropdown-box">
       <a href="#" onclick="alert('Sign up / Sign in coming soon!'); return false;">Sign up/sign in</a>
       <a href="#" onclick="alert('Settings panel coming soon!'); return false;">Settings</a>
-      <a href="https://discord.gg/YZTjWw3h9" target="_blank">Ticket/report</a>
+      <a href="/ticket">Ticket/report</a>
     </div>
   </div>
 `;
 
-// Reusable head script bundle (Includes Social Bar + Styles)
 const headContent = `
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Adsterra Social Bar Script -->
   <script src="https://biographygridetelegram.com/e1/11/ad/e111ad2e4698f632e78f38a4258c4a16.js"></script>
   ${siteStyles}
 `;
 
-// Reusable Adsterra banner snippet function
 const adBannerHTML = `
   <div class="ad-container">
     <script>
@@ -219,6 +264,7 @@ const adBannerHTML = `
   </div>
 `;
 
+// Home Route with Secret Invisible Button at Bottom-Right
 app.get('/', (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -282,6 +328,9 @@ app.get('/', (req, res) => {
 
         <p style="text-align: center; margin-top: 30px; font-weight: bold; color: #ffcc00;">That’s it, enjoy CAT SMP 🐱</p>
       </div>
+
+      <!-- Secret Invisible Button at Lowest Right Corner -->
+      <a href="/secret/tickets" class="secret-admin-trigger" title="Admin Portal"></a>
     </body>
     </html>
   `);
@@ -369,7 +418,7 @@ app.get('/shop/rank', (req, res) => {
   `);
 });
 
-// Main Vote Route with Dual-Action JavaScript Button + Banner
+// Main Vote Route
 app.get('/vote', (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -432,6 +481,117 @@ app.get('/vote/links', (req, res) => {
       
       <br>
       <a href="/vote" class="back-home">← Back to Vote Page</a>
+    </body>
+    </html>
+  `);
+});
+
+// Ticket Page Route
+app.get('/ticket', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <title>Cat SMP - Ticket & Report</title>
+      ${headContent}
+    </head>
+    <body>
+      ${hamburgerHTML}
+      <h1>Support Ticket</h1>
+      <p>Need help or want to report a player? Submit a ticket below.</p>
+      
+      <div class="content-box">
+        <h2>🎫 Create Ticket</h2>
+        <form action="/ticket/submit" method="POST" style="margin-top: 20px;">
+          <div class="form-group">
+            <label for="ign">In-game name:</label>
+            <input type="text" id="ign" name="ign" required placeholder="Enter your Minecraft username">
+          </div>
+          <div class="form-group">
+            <label for="reason">Reason:</label>
+            <textarea id="reason" name="reason" required placeholder="Describe your issue or report details..."></textarea>
+          </div>
+          <button type="submit" class="btn" style="width: 100%;">Submit</button>
+        </form>
+      </div>
+      
+      <br>
+      <a href="/" class="back-home">← Back to Home</a>
+    </body>
+    </html>
+  `);
+});
+
+// Handle Ticket Submission & Save to Storage
+app.post('/ticket/submit', (req, res) => {
+  const { ign, reason } = req.body;
+  const timestamp = new Date().toLocaleString();
+
+  // Save to our memory array
+  ticketStorage.unshift({ ign, reason, timestamp });
+
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <title>Cat SMP - Ticket Submitted</title>
+      ${headContent}
+    </head>
+    <body>
+      ${hamburgerHTML}
+      <h1>Ticket Submitted!</h1>
+      <p>Thank you, your report has been sent to the staff team.</p>
+      
+      <div class="content-box" style="text-align: center;">
+        <h2>✅ Success</h2>
+        <p style="color: #cccccc; margin-bottom: 20px;">We have received your report for <strong>${ign}</strong>.</p>
+        <a href="/" class="btn" style="display: inline-block; width: auto; padding: 12px 30px;">Return Home</a>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+// Secret Admin Panel to View All Tickets
+app.get('/secret/tickets', (req, res) => {
+  let ticketsHTML = '';
+  if (ticketStorage.length === 0) {
+    ticketsHTML = '<p style="text-align: center; color: #cccccc;">No tickets or reports submitted yet.</p>';
+  } else {
+    ticketStorage.forEach((t, index) => {
+      ticketsHTML += `
+        <div class="ticket-item">
+          <p style="margin: 0 0 6px 0; color: #ffcc00; font-size: 0.9rem;"><strong>Ticket #${ticketStorage.length - index}</strong></p>
+          <p style="margin: 0 0 6px 0;"><strong>In-game name:</strong> ${t.ign}</p>
+          <p style="margin: 0 0 6px 0;"><strong>Reason:</strong> ${t.reason}</p>
+          <p style="margin: 0; color: #aaaaaa; font-size: 0.95rem;"><strong>Date:</strong> ${t.timestamp}</p>
+        </div>
+        ${index < ticketStorage.length - 1 ? '<hr class="ticket-divider">' : ''}
+      `;
+    });
+  }
+
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <title>Cat SMP - Admin Dashboard</title>
+      ${headContent}
+    </head>
+    <body>
+      ${hamburgerHTML}
+      <h1>Admin Dashboard</h1>
+      <p>Secret ticket viewer portal.</p>
+      
+      <div class="content-box">
+        <h2>📋 All Player Tickets (${ticketStorage.length})</h2>
+        <div style="margin-top: 20px; max-height: 450px; overflow-y: auto; padding-right: 5px;">
+          ${ticketsHTML}
+        </div>
+      </div>
+      
+      <br>
+      <a href="/" class="back-home">← Back to Home</a>
     </body>
     </html>
   `);
