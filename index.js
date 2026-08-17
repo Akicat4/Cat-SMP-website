@@ -6,7 +6,7 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Reusable styling with a custom CSS Cat Fur pattern background
+// Reusable styling with the Cat Fur background and Hamburger Menu styles
 const siteStyles = `
   <style>
     body {
@@ -24,10 +24,65 @@ const siteStyles = `
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       text-align: center;
       padding: 50px 20px;
+      position: relative;
     }
+    /* Hamburger Menu Styles */
+    .menu-container {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      text-align: left;
+      z-index: 1000;
+    }
+    .hamburger-btn {
+      background-color: rgba(36, 36, 36, 0.9);
+      color: #ffcc00;
+      border: 1px solid rgba(255, 204, 0, 0.3);
+      padding: 10px 14px;
+      font-size: 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+      transition: background 0.2s;
+    }
+    .hamburger-btn:hover {
+      background-color: #242424;
+    }
+    .dropdown-box {
+      display: none;
+      position: absolute;
+      top: 50px;
+      left: 0;
+      background-color: rgba(26, 26, 26, 0.95);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 204, 0, 0.3);
+      border-radius: 8px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.7);
+      width: 180px;
+      overflow: hidden;
+    }
+    .dropdown-box a {
+      display: block;
+      color: #ffffff;
+      padding: 12px 16px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: background 0.2s, color 0.2s;
+    }
+    .dropdown-box a:last-child {
+      border-bottom: none;
+    }
+    .dropdown-box a:hover {
+      background-color: #ffcc00;
+      color: #1a1a1a;
+      font-weight: bold;
+    }
+    
     h1 {
       color: #ffcc00;
       font-size: 3rem;
+      margin-top: 20px;
       margin-bottom: 10px;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
     }
@@ -103,6 +158,40 @@ const siteStyles = `
       overflow: hidden;
     }
   </style>
+
+  <script>
+    function toggleMenu() {
+      var box = document.getElementById("dropdownMenu");
+      if (box.style.display === "block") {
+        box.style.display = "none";
+      } else {
+        box.style.display = "block";
+      }
+    }
+    // Close menu if clicked outside
+    window.onclick = function(event) {
+      if (!event.target.matches('.hamburger-btn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-box");
+        for (let openDropdown of dropdowns) {
+          if (openDropdown.style.display === "block") {
+            openDropdown.style.display = "none";
+          }
+        }
+      }
+    }
+  </script>
+`;
+
+// Reusable navbar component for top left
+const hamburgerHTML = `
+  <div class="menu-container" onclick="event.stopPropagation()">
+    <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
+    <div id="dropdownMenu" class="dropdown-box">
+      <a href="#" onclick="alert('Sign up / Sign in coming soon!'); return false;">Sign up/sign in</a>
+      <a href="#" onclick="alert('Settings panel coming soon!'); return false;">Settings</a>
+      <a href="https://discord.gg/YZTjWw3h9" target="_blank">Ticket/report</a>
+    </div>
+  </div>
 `;
 
 // Reusable head script bundle (Includes Social Bar + Styles)
@@ -139,6 +228,7 @@ app.get('/', (req, res) => {
       ${headContent}
     </head>
     <body>
+      ${hamburgerHTML}
       <h1>Cat SMP</h1>
       <p>Welcome to the official Cat SMP website! Jump into the action below.</p>
       
@@ -207,6 +297,7 @@ app.get('/shop', (req, res) => {
       ${headContent}
     </head>
     <body>
+      ${hamburgerHTML}
       <h1>Cat SMP Store</h1>
       <p>Support the server and get cool perks!</p>
       
@@ -236,6 +327,7 @@ app.get('/shop/currency', (req, res) => {
       ${headContent}
     </head>
     <body>
+      ${hamburgerHTML}
       <h1>Store - Currency</h1>
       <p>In-game currency items.</p>
       
@@ -261,6 +353,7 @@ app.get('/shop/rank', (req, res) => {
       ${headContent}
     </head>
     <body>
+      ${hamburgerHTML}
       <h1>Store - Ranks</h1>
       <p>Unlock awesome server ranks!</p>
       
@@ -286,6 +379,7 @@ app.get('/vote', (req, res) => {
       ${headContent}
     </head>
     <body>
+      ${hamburgerHTML}
       <h1>Vote for Cat SMP</h1>
       <p>Support the server and earn in-game vote keys!</p>
       
@@ -319,6 +413,7 @@ app.get('/vote/links', (req, res) => {
       ${headContent}
     </head>
     <body>
+      ${hamburgerHTML}
       <h1>Cat SMP Voting Links</h1>
       <p>Vote on the links below to claim your rewards in-game!</p>
       
@@ -345,4 +440,3 @@ app.get('/vote/links', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Cat SMP server is running on port ${PORT}`);
 });
-           
