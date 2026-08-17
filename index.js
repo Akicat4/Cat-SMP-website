@@ -6,6 +6,78 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Reusable styling for all pages to keep it consistent
+const siteStyles = `
+  <style>
+    body {
+      background-color: #1a1a1a;
+      color: #ffffff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      padding: 50px 20px;
+    }
+    h1 {
+      color: #ffcc00;
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+    p {
+      color: #b0b0b0;
+      font-size: 1.2rem;
+      margin-bottom: 40px;
+    }
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      max-width: 300px;
+      margin: 0 auto 50px auto;
+    }
+    .btn {
+      background-color: #ffcc00;
+      color: #1a1a1a;
+      width: 100%;
+      padding: 15px 0;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      display: inline-block;
+    }
+    .btn:hover {
+      background-color: #e6b800;
+      transform: translateY(-2px);
+    }
+    .content-box {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: left;
+      background-color: #242424;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+    .content-box h2 {
+      color: #ffcc00;
+      text-align: center;
+      margin-top: 0;
+    }
+    .back-home {
+      display: inline-block;
+      margin-top: 30px;
+      color: #ffcc00;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .back-home:hover {
+      text-decoration: underline;
+    }
+  </style>
+`;
+
 app.get('/', (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -14,77 +86,7 @@ app.get('/', (req, res) => {
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Cat SMP</title>
-      <style>
-        body {
-          background-color: #1a1a1a;
-          color: #ffffff;
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-          text-align: center;
-          padding: 50px 20px;
-        }
-        h1 {
-          color: #ffcc00;
-          font-size: 3rem;
-          margin-bottom: 10px;
-        }
-        p {
-          color: #b0b0b0;
-          font-size: 1.2rem;
-          margin-bottom: 40px;
-        }
-        .button-container {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 15px;
-          max-width: 300px;
-          margin: 0 auto 50px auto;
-        }
-        .btn {
-          background-color: #ffcc00;
-          color: #1a1a1a;
-          width: 100%;
-          padding: 15px 0;
-          text-decoration: none;
-          font-size: 1.1rem;
-          font-weight: bold;
-          border-radius: 8px;
-          transition: background 0.2s, transform 0.2s;
-          box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-          display: inline-block;
-        }
-        .btn:hover {
-          background-color: #e6b800;
-          transform: translateY(-2px);
-        }
-        .instructions {
-          max-width: 600px;
-          margin: 0 auto;
-          text-align: left;
-          background-color: #242424;
-          padding: 30px;
-          border-radius: 12px;
-          box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-        }
-        .instructions h2 {
-          color: #ffcc00;
-          text-align: center;
-          margin-top: 0;
-        }
-        .instructions h3 {
-          color: #4CAF50;
-          border-bottom: 1px solid #333;
-          padding-bottom: 5px;
-        }
-        .instructions ul, .instructions ol {
-          color: #cccccc;
-          line-height: 1.6;
-        }
-        .highlight {
-          color: #ffcc00;
-          font-weight: bold;
-        }
-      </style>
+      ${siteStyles}
     </head>
     <body>
       <h1>Cat SMP</h1>
@@ -97,32 +99,32 @@ app.get('/', (req, res) => {
         <a href="/vote" class="btn">Vote</a>
       </div>
 
-      <div class="instructions">
+      <div class="content-box">
         <h2>🐱 How to Join CAT SMP</h2>
         <p style="text-align: center; margin-bottom: 20px;">Cat SMP is a survival Minecraft server with many features!</p>
         
-        <p><span class="highlight">IP:</span> CatSMPgg.aternos.me<br>
-        <span class="highlight">Bedrock Port:</span> 34018</p>
+        <p><strong>IP:</strong> CatSMPgg.aternos.me<br>
+        <strong>Bedrock Port:</strong> 34018</p>
 
-        <h3>💻 Java</h3>
-        <ol>
+        <h3 style="color: #4CAF50;">💻 Java</h3>
+        <ol style="color: #cccccc; line-height: 1.6;">
           <li>Open Minecraft Java.</li>
           <li>Go to Multiplayer → Add Server.</li>
-          <li>Put <span class="highlight">CatSMPgg.aternos.me</span> in the Server Address.</li>
+          <li>Put <strong>CatSMPgg.aternos.me</strong> in the Server Address.</li>
           <li>Click Done and join the server.</li>
         </ol>
 
-        <h3>📱 Bedrock</h3>
-        <ol>
+        <h3 style="color: #4CAF50;">📱 Bedrock</h3>
+        <ol style="color: #cccccc; line-height: 1.6;">
           <li>Open Minecraft Bedrock.</li>
           <li>Go to Play → Servers → Add Server.</li>
-          <li>Server Address: <span class="highlight">CatSMPgg.aternos.me</span></li>
-          <li>Port: <span class="highlight">34018</span></li>
+          <li>Server Address: <strong>CatSMPgg.aternos.me</strong></li>
+          <li>Port: <strong>34018</strong></li>
           <li>Save it and join.</li>
         </ol>
 
-        <h3>🎮 PlayStation (Bedrock Online)</h3>
-        <ol>
+        <h3 style="color: #4CAF50;">🎮 PlayStation (Bedrock Online)</h3>
+        <ol style="color: #cccccc; line-height: 1.6;">
           <li>Download/open Bedrock Online on your phone.</li>
           <li>Make sure your phone and PlayStation are on the same Wi-Fi.</li>
           <li>Add the server in Bedrock Online:
@@ -145,7 +147,61 @@ app.get('/', (req, res) => {
   `);
 });
 
+// Shop Route
+app.get('/shop', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Cat SMP - Store</title>
+      ${siteStyles}
+    </head>
+    <body>
+      <h1>Cat SMP Store</h1>
+      <p>Support the server and get cool perks!</p>
+      
+      <div class="content-box">
+        <h2>🛒 Store Coming Soon</h2>
+        <p style="text-align: center; color: #cccccc;">We are currently setting up our ranks and items. Check back later!</p>
+      </div>
+      
+      <br>
+      <a href="/" class="back-home">← Back to Home</a>
+    </body>
+    </html>
+  `);
+});
+
+// Vote Route
+app.get('/vote', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Cat SMP - Vote</title>
+      ${siteStyles}
+    </head>
+    <body>
+      <h1>Vote for Cat SMP</h1>
+      <p>Support the server by voting on our links!</p>
+      
+      <div class="content-box">
+        <h2>⭐ Voting Links</h2>
+        <p style="text-align: center; color: #cccccc;">Voting links will be added here soon so you can earn rewards in-game!</p>
+      </div>
+      
+      <br>
+      <a href="/" class="back-home">← Back to Home</a>
+    </body>
+    </html>
+  `);
+});
+
 app.listen(PORT, () => {
   console.log(`Cat SMP server is running on port ${PORT}`);
 });
-           
+  
