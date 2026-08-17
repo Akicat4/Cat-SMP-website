@@ -257,7 +257,7 @@ app.get('/shop/rank', (req, res) => {
   `);
 });
 
-// Shop Sub-Route: Coming Soon
+// Shop Sub-Route: Coming Soon (Jumpscare Edition)
 app.get('/shop/coming-soon', (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -265,16 +265,57 @@ app.get('/shop/coming-soon', (req, res) => {
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Cat SMP - Coming Soon</title>
+      <title>Cat SMP - Secret</title>
       <style>
         body {
-          background-color: #1a1a1a;
+          background-color: #000000;
           margin: 0;
           padding: 0;
+          height: 100vh;
+          overflow: hidden;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .jumpscare-container {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: black;
+          z-index: 9999;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+        .jumpscare-container img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .back-btn {
+          position: absolute;
+          bottom: 20px;
+          background-color: #ffcc00;
+          color: #1a1a1a;
+          padding: 10px 20px;
+          text-decoration: none;
+          font-weight: bold;
+          border-radius: 5px;
+          z-index: 10000;
+        }
+        .back-btn:hover {
+          background-color: #e6b800;
         }
       </style>
     </head>
     <body>
+      <div class="jumpscare-container">
+        <img src="https://share.google/DBcQdz7sTDwtNwTcX" alt="Gotcha!">
+        <a href="/shop" class="back-btn">Run Away Back to Store</a>
+      </div>
     </body>
     </html>
   `);
