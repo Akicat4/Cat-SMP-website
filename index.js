@@ -31,8 +31,10 @@ const siteStyles = `
       --input-color: #ffffff;
     }
     body.light-mode {
-      --bg-color: #f0f2f5;
-      --bg-image: none;
+      --bg-color: #f7f9fc;
+      --bg-image: radial-gradient(#e2e8f0 15%, transparent 16%), radial-gradient(#cbd5e1 15%, transparent 16%);
+      --bg-size: 20px 20px;
+      --bg-position: 0 0, 10px 10px;
       --text-color: #202124;
       --subtext-color: #5f6368;
       --box-bg: rgba(255, 255, 255, 0.95);
@@ -45,11 +47,13 @@ const siteStyles = `
       --input-color: #202124;
     }
     body.dark-mode {
-      --bg-color: #121212;
-      --bg-image: none;
+      --bg-color: #0d1117;
+      --bg-image: radial-gradient(#21262d 15%, transparent 16%), radial-gradient(#161b22 15%, transparent 16%);
+      --bg-size: 16px 16px;
+      --bg-position: 0 0, 8px 8px;
       --text-color: #ffffff;
       --subtext-color: #b0b0b0;
-      --box-bg: rgba(30, 30, 30, 0.95);
+      --box-bg: rgba(22, 27, 34, 0.95);
       --box-border: rgba(255, 255, 255, 0.1);
       --btn-bg: #bb86fc;
       --btn-color: #121212;
@@ -61,8 +65,8 @@ const siteStyles = `
     body {
       background-color: var(--bg-color);
       background-image: var(--bg-image);
-      background-size: 60px 60px;
-      background-position: 0 0, 0 30px, 30px -30px, -30px 0px, 0 0;
+      background-size: var(--bg-size, 60px 60px);
+      background-position: var(--bg-position, 0 0, 0 30px, 30px -30px, -30px 0px, 0 0);
       background-attachment: fixed;
       color: var(--text-color);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -79,16 +83,11 @@ const siteStyles = `
     .dropdown-box a, .dropdown-box .menu-item-btn { display: flex; align-items: center; gap: 10px; color: var(--text-color); padding: 12px 16px; text-decoration: none; font-size: 0.95rem; background: none; border: none; width: 100%; text-align: left; cursor: pointer; box-sizing: border-box; border-bottom: 1px solid var(--box-border); }
     .dropdown-box a:hover, .dropdown-box .menu-item-btn:hover { background-color: var(--btn-bg); color: var(--btn-color); font-weight: bold; }
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 2000; justify-content: center; align-items: center; }
-    .modal-card { background-color: var(--box-bg); color: var(--text-color); border: 1px solid var(--box-border); width: 90%; max-width: 400px; padding: 30px; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: left; }
+    .modal-card { background-color: var(--box-bg); color: var(--text-color); border: 1px solid var(--box-border); width: 90%; max-width: 420px; padding: 30px; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: left; max-height: 85vh; overflow-y: auto; }
     .modal-card h3 { margin-top: 0; color: var(--btn-bg); display: flex; justify-content: space-between; align-items: center; }
     .close-modal { background: none; border: none; color: var(--text-color); font-size: 1.5rem; cursor: pointer; }
-    .setting-option { display: flex; justify-content: space-between; align-items: center; margin: 20px 0; font-size: 1rem; font-weight: 500; }
-    .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
-    .switch input { opacity: 0; width: 0; height: 0; }
-    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .3s; border-radius: 26px; }
-    .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
-    input:checked + .slider { background-color: var(--btn-bg); }
-    input:checked + .slider:before { transform: translateX(24px); }
+    .settings-section-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--btn-bg); margin: 20px 0 8px 0; font-weight: bold; border-bottom: 1px solid var(--box-border); padding-bottom: 4px; }
+    .setting-option { display: flex; justify-content: space-between; align-items: center; margin: 12px 0; font-size: 0.95rem; font-weight: 500; }
     h1 { color: var(--text-color); font-size: 3rem; margin: 20px 0 10px; }
     p { color: var(--subtext-color); font-size: 1.2rem; margin-bottom: 40px; }
     .button-container { display: flex; flex-direction: column; align-items: center; gap: 15px; max-width: 300px; margin: 0 auto 50px auto; }
@@ -149,7 +148,7 @@ const siteStyles = `
     });
   </script>
 `;
-  const hamburgerHTML = `
+const hamburgerHTML = `
   <div class="menu-container" onclick="event.stopPropagation()">
     <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
     <div id="dropdownMenu" class="dropdown-box">
@@ -161,10 +160,28 @@ const siteStyles = `
   <div id="settingsModal" class="modal-overlay">
     <div class="modal-card">
       <h3>Settings <button class="close-modal" onclick="closeSettingsModal()">&times;</button></h3>
-      <hr style="border:0; border-top:1px solid var(--box-border); margin-bottom: 20px;">
-      <div class="setting-option"><span>Light Mode</span><label class="switch"><input type="checkbox" id="lightModeSwitch" onchange="handleLightModeToggle()"><span class="slider"></span></label></div>
-      <div class="setting-option"><span>Dark Mode</span><label class="switch"><input type="checkbox" id="darkModeSwitch" onchange="handleDarkModeToggle()"><span class="slider"></span></label></div>
-      <button class="btn" style="margin-top: 25px; width: 100%;" onclick="closeSettingsModal()">Done</button>
+      
+      <div class="settings-section-title">Interface</div>
+      <div class="setting-option">
+        <span>Light mode (fluffy texture)</span>
+        <label class="switch"><input type="checkbox" id="lightModeSwitch" onchange="handleLightModeToggle()"><span class="slider"></span></label>
+      </div>
+      <div class="setting-option">
+        <span>Dark mode (fur texture)</span>
+        <label class="switch"><input type="checkbox" id="darkModeSwitch" onchange="handleDarkModeToggle()"><span class="slider"></span></label>
+      </div>
+
+      <div class="settings-section-title">Account</div>
+      <div class="setting-option" style="justify-content: flex-start;">
+        <a href="/auth" class="btn" style="padding: 10px 0; font-size: 0.95rem; margin: 0;">Log out</a>
+      </div>
+
+      <div class="settings-section-title">Server Plugins</div>
+      <div style="font-size: 0.9rem; color: var(--subtext-color); padding: 5px 0 15px 0; text-align: left;">
+        (Page, blank for now)
+      </div>
+
+      <button class="btn" style="margin-top: 15px; width: 100%;" onclick="closeSettingsModal()">Done</button>
     </div>
   </div>
 `;
