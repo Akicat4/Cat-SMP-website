@@ -85,6 +85,22 @@ const siteStyles = `
   </style>
 `;
 
+// Reusable Adsterra banner snippet function to keep code clean
+const adBannerHTML = `
+  <div class="ad-container">
+    <script>
+      atOptions = {
+        'key' : '6d1d513e7029b77d54e1471992ff0468',
+        'format' : 'iframe',
+        'height' : 250,
+        'width' : 300,
+        'params' : {}
+      };
+    </script>
+    <script src="https://www.highperformanceformat.com/6d1d513e7029b77d54e1471992ff0468/invoke.js"></script>
+  </div>
+`;
+
 app.get('/', (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -148,27 +164,13 @@ app.get('/', (req, res) => {
         </ol>
 
         <p style="text-align: center; margin-top: 30px; font-weight: bold; color: #ffcc00;">That’s it, enjoy CAT SMP 🐱</p>
-      
-        <!-- Adsterra Banner Ad -->
-        <div class="ad-container">
-          <script>
-            atOptions = {
-              'key' : '6d1d513e7029b77d54e1471992ff0468',
-              'format' : 'iframe',
-              'height' : 250,
-              'width' : 300,
-              'params' : {}
-            };
-          </script>
-          <script src="https://www.highperformanceformat.com/6d1d513e7029b77d54e1471992ff0468/invoke.js"></script>
-        </div>
       </div>
     </body>
     </html>
   `);
 });
 
-// Shop Main Route with the 3 Buttons
+// Shop Main Route with Buttons and Banner inside a content box
 app.get('/shop', (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -183,10 +185,14 @@ app.get('/shop', (req, res) => {
       <h1>Cat SMP Store</h1>
       <p>Support the server and get cool perks!</p>
       
-      <div class="button-container">
-        <a href="/shop/currency" class="btn">Currency</a>
-        <a href="/shop/rank" class="btn">Rank</a>
-        <a href="/shop/coming-soon" class="btn">Coming soon</a>
+      <div class="content-box">
+        <h2>🛍️ Server Store</h2>
+        <div class="button-container" style="margin-top: 20px;">
+          <a href="/shop/currency" class="btn">Currency</a>
+          <a href="/shop/rank" class="btn">Rank</a>
+          <a href="/shop/coming-soon" class="btn">Coming soon</a>
+        </div>
+        ${adBannerHTML}
       </div>
       
       <a href="/" class="back-home">← Back to Home</a>
@@ -272,7 +278,7 @@ app.get('/shop/coming-soon', (req, res) => {
   `);
 });
 
-// Vote Route
+// Vote Route with Banner inside the content box
 app.get('/vote', (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -290,6 +296,7 @@ app.get('/vote', (req, res) => {
       <div class="content-box">
         <h2>⭐ Voting Links</h2>
         <p style="text-align: center; color: #cccccc;">Voting links will be added here soon so you can earn rewards in-game!</p>
+        ${adBannerHTML}
       </div>
       
       <br>
@@ -302,4 +309,4 @@ app.get('/vote', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Cat SMP server is running on port ${PORT}`);
 });
-        
+           
