@@ -6,7 +6,7 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Reusable styling for all pages to keep it consistent
+// Reusable styling for all pages to keep it consistent & center all button text
 const siteStyles = `
   <style>
     body {
@@ -34,7 +34,7 @@ const siteStyles = `
       max-width: 300px;
       margin: 0 auto 50px auto;
     }
-    .btn {
+    .btn, button.btn {
       background-color: #ffcc00;
       color: #1a1a1a;
       width: 100%;
@@ -45,11 +45,15 @@ const siteStyles = `
       border-radius: 8px;
       transition: background 0.2s, transform 0.2s;
       box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-      display: inline-block;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
       border: none;
       cursor: pointer;
+      box-sizing: border-box;
     }
-    .btn:hover {
+    .btn:hover, button.btn:hover {
       background-color: #e6b800;
       transform: translateY(-2px);
     }
@@ -87,6 +91,15 @@ const siteStyles = `
   </style>
 `;
 
+// Reusable head script bundle (Includes Social Bar + Styles)
+const headContent = `
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Adsterra Social Bar Script -->
+  <script src="https://biographygridetelegram.com/e1/11/ad/e111ad2e4698f632e78f38a4258c4a16.js"></script>
+  ${siteStyles}
+`;
+
 // Reusable Adsterra banner snippet function
 const adBannerHTML = `
   <div class="ad-container">
@@ -108,10 +121,8 @@ app.get('/', (req, res) => {
     <!DOCTYPE html>
     <html lang="en">
     <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Cat SMP</title>
-      ${siteStyles}
+      ${headContent}
     </head>
     <body>
       <h1>Cat SMP</h1>
@@ -178,10 +189,8 @@ app.get('/shop', (req, res) => {
     <!DOCTYPE html>
     <html lang="en">
     <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Cat SMP - Store</title>
-      ${siteStyles}
+      ${headContent}
     </head>
     <body>
       <h1>Cat SMP Store</h1>
@@ -209,10 +218,8 @@ app.get('/shop/currency', (req, res) => {
     <!DOCTYPE html>
     <html lang="en">
     <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Cat SMP - Currency</title>
-      ${siteStyles}
+      ${headContent}
     </head>
     <body>
       <h1>Store - Currency</h1>
@@ -236,10 +243,8 @@ app.get('/shop/rank', (req, res) => {
     <!DOCTYPE html>
     <html lang="en">
     <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Cat SMP - Rank</title>
-      ${siteStyles}
+      ${headContent}
     </head>
     <body>
       <h1>Store - Ranks</h1>
@@ -263,10 +268,8 @@ app.get('/vote', (req, res) => {
     <!DOCTYPE html>
     <html lang="en">
     <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Cat SMP - Vote</title>
-      ${siteStyles}
+      ${headContent}
     </head>
     <body>
       <h1>Vote for Cat SMP</h1>
@@ -298,10 +301,8 @@ app.get('/vote/links', (req, res) => {
     <!DOCTYPE html>
     <html lang="en">
     <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Cat SMP - Voting Links</title>
-      ${siteStyles}
+      ${headContent}
     </head>
     <body>
       <h1>Cat SMP Voting Links</h1>
@@ -330,3 +331,4 @@ app.get('/vote/links', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Cat SMP server is running on port ${PORT}`);
 });
+        
