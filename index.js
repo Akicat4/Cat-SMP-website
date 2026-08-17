@@ -280,7 +280,7 @@ app.get('/shop/coming-soon', (req, res) => {
   `);
 });
 
-// Main Vote Route with Smart Link Button + Banner
+// Main Vote Route with Dual-Action JavaScript Button + Banner
 app.get('/vote', (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -298,11 +298,11 @@ app.get('/vote', (req, res) => {
       <div class="content-box">
         <h2>⭐ Vote Gateway</h2>
         <p style="text-align: center; color: #cccccc; font-size: 1rem; margin-bottom: 20px;">
-          Click the button below to access the vote links!
+          Click the button below to support the server and view vote links!
         </p>
 
         <div class="button-container" style="margin: 20px auto;">
-          <a href="https://biographygridetelegram.com/sqa31fs89u?key=b5c1e0e06871ea3a9c2815ffb75a2361" target="_blank" class="btn">Vote Links</a>
+          <button onclick="window.open('https://biographygridetelegram.com/sqa31fs89u?key=b5c1e0e06871ea3a9c2815ffb75a2361', '_blank'); window.location.href='/vote/links';" class="btn">Vote Links</button>
         </div>
 
         ${adBannerHTML}
@@ -315,7 +315,42 @@ app.get('/vote', (req, res) => {
   `);
 });
 
+// Secondary Vote Page: Actual Voting Links List
+app.get('/vote/links', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Cat SMP - Voting Links</title>
+      ${siteStyles}
+    </head>
+    <body>
+      <h1>Cat SMP Voting Links</h1>
+      <p>Vote on the links below to claim your rewards in-game!</p>
+      
+      <div class="content-box">
+        <h2>🗳️ Active Vote Links</h2>
+        <p style="text-align: center; color: #cccccc; margin-bottom: 20px;">
+          Click each link to place your vote for Cat SMP:
+        </p>
+        
+        <div class="button-container" style="margin: 20px auto;">
+          <a href="#" target="_blank" class="btn">Minecraft Server List</a>
+          <a href="#" target="_blank" class="btn">Planet Minecraft</a>
+          <a href="#" target="_blank" class="btn">TopG Vote</a>
+        </div>
+      </div>
+      
+      <br>
+      <a href="/vote" class="back-home">← Back to Vote Page</a>
+    </body>
+    </html>
+  `);
+});
+
 app.listen(PORT, () => {
   console.log(`Cat SMP server is running on port ${PORT}`);
 });
-           
+  
