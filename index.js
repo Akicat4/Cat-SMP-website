@@ -75,6 +75,13 @@ const siteStyles = `
     .back-home:hover {
       text-decoration: underline;
     }
+    .ad-container {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
   </style>
 `;
 
@@ -141,6 +148,20 @@ app.get('/', (req, res) => {
         </ol>
 
         <p style="text-align: center; margin-top: 30px; font-weight: bold; color: #ffcc00;">That’s it, enjoy CAT SMP 🐱</p>
+      
+        <!-- Adsterra Banner Ad -->
+        <div class="ad-container">
+          <script>
+            atOptions = {
+              'key' : '6d1d513e7029b77d54e1471992ff0468',
+              'format' : 'iframe',
+              'height' : 250,
+              'width' : 300,
+              'params' : {}
+            };
+          </script>
+          <script src="https://www.highperformanceformat.com/6d1d513e7029b77d54e1471992ff0468/invoke.js"></script>
+        </div>
       </div>
     </body>
     </html>
@@ -281,4 +302,4 @@ app.get('/vote', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Cat SMP server is running on port ${PORT}`);
 });
-                  
+        
