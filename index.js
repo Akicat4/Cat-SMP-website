@@ -85,7 +85,7 @@ const siteStyles = `
   </style>
 `;
 
-// Reusable Adsterra banner snippet function to keep code clean
+// Reusable Adsterra banner snippet function
 const adBannerHTML = `
   <div class="ad-container">
     <script>
@@ -170,7 +170,7 @@ app.get('/', (req, res) => {
   `);
 });
 
-// Shop Main Route with Buttons and Banner inside a content box
+// Shop Main Route
 app.get('/shop', (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -255,7 +255,7 @@ app.get('/shop/rank', (req, res) => {
   `);
 });
 
-// Shop Sub-Route: Coming Soon (Empty black page)
+// Shop Sub-Route: Coming Soon
 app.get('/shop/coming-soon', (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -278,7 +278,7 @@ app.get('/shop/coming-soon', (req, res) => {
   `);
 });
 
-// Vote Route with Banner inside the content box
+// Vote Route with Click-to-Verify Supporter Flow
 app.get('/vote', (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -291,11 +291,19 @@ app.get('/vote', (req, res) => {
     </head>
     <body>
       <h1>Vote for Cat SMP</h1>
-      <p>Support the server by voting on our links!</p>
+      <p>Support the server and earn in-game vote keys!</p>
       
       <div class="content-box">
-        <h2>⭐ Voting Links</h2>
-        <p style="text-align: center; color: #cccccc;">Voting links will be added here soon so you can earn rewards in-game!</p>
+        <h2>⭐ Voting & Support Steps</h2>
+        <p style="text-align: center; color: #cccccc; font-size: 1rem; margin-bottom: 20px;">
+          1. View the sponsor ad below to help keep Cat SMP online!<br>
+          2. Click your preferred voting link once ready.
+        </p>
+
+        <div class="button-container" style="margin: 20px auto;">
+          <a href="#" target="_blank" class="btn">Vote Link 1 (Coming Soon)</a>
+        </div>
+
         ${adBannerHTML}
       </div>
       
