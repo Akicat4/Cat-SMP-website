@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 const ticketStorage = [];
 const userStorage = [];
 
-// Reusable styling with the Cat Fur background and Hamburger Menu styles
+// Reusable styling with the Cat Fur background
 const siteStyles = `
   <style>
     body {
@@ -34,57 +34,6 @@ const siteStyles = `
       position: relative;
       min-height: 100vh;
       box-sizing: border-box;
-    }
-    .menu-container {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      text-align: left;
-      z-index: 1000;
-    }
-    .hamburger-btn {
-      background-color: rgba(36, 36, 36, 0.9);
-      color: #ffcc00;
-      border: 1px solid rgba(255, 204, 0, 0.3);
-      padding: 10px 14px;
-      font-size: 1.2rem;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.4);
-      transition: background 0.2s;
-    }
-    .hamburger-btn:hover {
-      background-color: #242424;
-    }
-    .dropdown-box {
-      display: none;
-      position: absolute;
-      top: 50px;
-      left: 0;
-      background-color: rgba(26, 26, 26, 0.95);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 204, 0, 0.3);
-      border-radius: 8px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.7);
-      width: 180px;
-      overflow: hidden;
-    }
-    .dropdown-box a {
-      display: block;
-      color: #ffffff;
-      padding: 12px 16px;
-      text-decoration: none;
-      font-size: 0.95rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      transition: background 0.2s, color 0.2s;
-    }
-    .dropdown-box a:last-child {
-      border-bottom: none;
-    }
-    .dropdown-box a:hover {
-      background-color: #ffcc00;
-      color: #1a1a1a;
-      font-weight: bold;
     }
     h1 {
       color: #ffcc00;
@@ -282,38 +231,6 @@ const siteStyles = `
       background-color: #1557b0;
     }
   </style>
-
-  <script>
-    function toggleMenu() {
-      var box = document.getElementById("dropdownMenu");
-      if (box.style.display === "block") {
-        box.style.display = "none";
-      } else {
-        box.style.display = "block";
-      }
-    }
-    window.onclick = function(event) {
-      if (!event.target.matches('.hamburger-btn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-box");
-        for (let openDropdown of dropdowns) {
-          if (openDropdown.style.display === "block") {
-            openDropdown.style.display = "none";
-          }
-        }
-      }
-    }
-  </script>
-`;
-
-const hamburgerHTML = `
-  <div class="menu-container" onclick="event.stopPropagation()">
-    <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
-    <div id="dropdownMenu" class="dropdown-box">
-      <a href="/auth">Sign up/sign in</a>
-      <a href="#" onclick="alert('Settings panel coming soon!'); return false;">Settings</a>
-      <a href="/ticket">Ticket/report</a>
-    </div>
-  </div>
 `;
 
 const headContent = `
@@ -348,7 +265,6 @@ app.get('/', (req, res) => {
       ${headContent}
     </head>
     <body>
-      ${hamburgerHTML}
       <h1>Cat SMP</h1>
       <p>Welcome to the official Cat SMP website! Jump into the action below.</p>
       
@@ -357,6 +273,8 @@ app.get('/', (req, res) => {
         <a href="https://cat-01.onrender.com" target="_blank" class="btn">Server Status</a>
         <a href="/shop" class="btn">Store</a>
         <a href="/vote" class="btn">Vote</a>
+        <a href="/auth" class="btn">Sign up/sign in</a>
+        <a href="/ticket" class="btn">Ticket/report</a>
       </div>
 
       <div class="content-box">
@@ -420,7 +338,6 @@ app.get('/shop', (req, res) => {
       ${headContent}
     </head>
     <body>
-      ${hamburgerHTML}
       <h1>Cat SMP Store</h1>
       <p>Support the server and get cool perks!</p>
       
@@ -450,7 +367,6 @@ app.get('/shop/currency', (req, res) => {
       ${headContent}
     </head>
     <body>
-      ${hamburgerHTML}
       <h1>Store - Currency</h1>
       <p>In-game currency items.</p>
       
@@ -476,7 +392,6 @@ app.get('/shop/rank', (req, res) => {
       ${headContent}
     </head>
     <body>
-      ${hamburgerHTML}
       <h1>Store - Ranks</h1>
       <p>Unlock awesome server ranks!</p>
       
@@ -502,7 +417,6 @@ app.get('/vote', (req, res) => {
       ${headContent}
     </head>
     <body>
-      ${hamburgerHTML}
       <h1>Vote for Cat SMP</h1>
       <p>Support the server and earn in-game vote keys!</p>
       
@@ -536,7 +450,6 @@ app.get('/vote/links', (req, res) => {
       ${headContent}
     </head>
     <body>
-      ${hamburgerHTML}
       <h1>Cat SMP Voting Links</h1>
       <p>Vote on the links below to claim your rewards in-game!</p>
       
@@ -570,7 +483,6 @@ app.get('/ticket', (req, res) => {
       ${headContent}
     </head>
     <body>
-      ${hamburgerHTML}
       <h1>Support Ticket</h1>
       <p>Need help or want to report a player? Submit a ticket below.</p>
       
@@ -611,7 +523,6 @@ app.post('/ticket/submit', (req, res) => {
       ${headContent}
     </head>
     <body>
-      ${hamburgerHTML}
       <h1>Ticket Submitted!</h1>
       <p>Thank you, your report has been sent to the staff team.</p>
       
@@ -635,8 +546,6 @@ app.get('/auth', (req, res) => {
       ${headContent}
     </head>
     <body>
-      ${hamburgerHTML}
-      
       <div class="google-card">
         <div class="google-logo">
           <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
@@ -675,7 +584,6 @@ app.post('/auth/submit', (req, res) => {
       ${headContent}
     </head>
     <body>
-      ${hamburgerHTML}
       <h1>Welcome!</h1>
       <p>You have successfully signed in.</p>
       
@@ -692,4 +600,48 @@ app.post('/auth/submit', (req, res) => {
 // Secret Admin Panel to View All Tickets
 app.get('/secret/tickets', (req, res) => {
   let ticketsHTML = '';
-  if (ticke
+  if (ticketStorage.length === 0) {
+    ticketsHTML = '<p style="text-align: center; color: #cccccc;">No tickets or reports submitted yet.</p>';
+  } else {
+    ticketStorage.forEach((t, index) => {
+      ticketsHTML += `
+        <div class="ticket-item">
+          <p style="margin: 0 0 6px 0; color: #ffcc00; font-size: 0.9rem;"><strong>Ticket #${ticketStorage.length - index}</strong></p>
+          <p style="margin: 0 0 6px 0;"><strong>In-game name:</strong> ${t.ign}</p>
+          <p style="margin: 0 0 6px 0;"><strong>Reason:</strong> ${t.reason}</p>
+          <p style="margin: 0; color: #aaaaaa; font-size: 0.95rem;"><strong>Date:</strong> ${t.timestamp}</p>
+        </div>
+        ${index < ticketStorage.length - 1 ? '<hr class="ticket-divider">' : ''}
+      `;
+    });
+  }
+
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <title>Cat SMP - Admin Dashboard</title>
+      ${headContent}
+    </head>
+    <body>
+      <h1>Admin Dashboard</h1>
+      <p>Secret ticket viewer portal.</p>
+      
+      <div class="content-box">
+        <h2>📋 All Player Tickets (${ticketStorage.length})</h2>
+        <div style="margin-top: 20px; max-height: 450px; overflow-y: auto; padding-right: 5px;">
+          ${ticketsHTML}
+        </div>
+      </div>
+      
+      <br>
+      <a href="/" class="back-home">← Back to Home</a>
+    </body>
+    </html>
+  `);
+});
+
+app.listen(PORT, () => {
+  console.log(`Cat SMP server is running on port ${PORT}`);
+});
+  
