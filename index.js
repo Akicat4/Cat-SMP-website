@@ -1,6 +1,4 @@
 const express = require('express');
-const fs = require('fs');
-const yaml = require('js-yaml');
 const path = require('path');
 
 const app = express();
@@ -151,8 +149,7 @@ const siteStyles = `
     });
   </script>
 `;
-
-const hamburgerHTML = `
+  const hamburgerHTML = `
   <div class="menu-container" onclick="event.stopPropagation()">
     <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
     <div id="dropdownMenu" class="dropdown-box">
@@ -220,4 +217,11 @@ app.post('/auth/submit', (req, res) => {
 });
 
 app.get('/secret/tickets', (req, res) => {
-  let ticketsHTML = ticketStorage.length === 0 ? '<p style="text-align: center;">No tickets or reports submit
+  let ticketsHTML = ticketStorage.length === 0 ? '<p style="text-align: center;">No tickets or reports submitted yet.</p>' : ticketStorage.map((t, index) => `<div class="ticket-item"><p style="margin: 0 0 6px 0; font-size: 0.9rem;"><strong>Ticket #${ticketStorage.length - index}</strong></p><p style="margin: 0 0 6px 0;"><strong>In-game name:</strong> ${t.ign}</p><p style="margin: 0 0 6px 0;"><strong>Reason:</strong> ${t.reason}</p><p style="margin: 0; font-size: 0.95rem;"><strong>Date:</strong> ${t.timestamp}</p></div>${index < ticketStorage.length - 1 ? '<hr style="border:none; border-top:2px solid var(--box-border); margin: 15px 0;">' : ''}`).join('');
+  res.send(`<!DOCTYPE html><html lang="en"><head><title>Cat SMP - Admin Dashboard</title>${headContent}</head><body>${hamburgerHTML}<h1>Admin Dashboard</h1><p>Secret ticket viewer portal.</p><div class="content-box"><h2>📋 All Player Tickets (${ticketStorage.length})</h2><div style="margin-top: 20px; max-height: 450px; overflow-y: auto; padding-right: 5px;">${ticketsHTML}</div></div><br><a href="/" class="back-home">← Back to Home</a></body></html>`);
+});
+
+app.listen(PORT, () => {
+  console.log(`Cat SMP server is running on port ${PORT}`);
+});
+  
