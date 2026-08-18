@@ -78,7 +78,6 @@ const siteStyles = `
     .user-tag-container a { color: #ffcc00; text-decoration: none; }
     .user-tag-container a:hover { text-decoration: underline; }
     
-    /* Rank colors */
     .rank-owner { color: #ff3333; font-weight: bold; }
     .rank-manager { color: #333333; font-weight: bold; }
     .rank-mainmod { color: #0044cc; font-weight: bold; }
@@ -201,7 +200,7 @@ const siteStyles = `
     });
   </script>
 `;
-  const hamburgerHTML = `
+const hamburgerHTML = `
   <div class="menu-container" onclick="event.stopPropagation()">
     <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
     <div id="dropdownMenu" class="dropdown-box">
@@ -246,8 +245,7 @@ const adBannerHTML = `<div class="ad-container"><script>atOptions = { 'key' : '6
 app.get('/', (req, res) => {
   res.send(`<!DOCTYPE html><html lang="en"><head><title>Cat SMP</title>${headContent}</head><body>${hamburgerHTML}<h1><span class="highlight">Cat SMP</span></h1><p>Welcome to the official <span class="highlight">Cat SMP</span> website! Jump into the action below.</p><div class="button-container"><a href="https://discord.gg/YZTjWw3h9" target="_blank" class="btn">Join Discord</a><a href="/shop" class="btn">Store</a><a href="/vote" class="btn">Vote</a></div><div class="content-box"><h2>🐱 How to Join <span class="highlight">Cat SMP</span></h2><p style="text-align: center; margin-bottom: 20px;"><span class="highlight">Cat SMP</span> is a survival Minecraft server with many features!</p><p><strong>IP:</strong> CatSMPgg.aternos.me<br><strong>Bedrock Port:</strong> 34018</p><h3 style="color: #ffcc00;">💻 Java</h3><ol style="line-height: 1.6;"><li>Open Minecraft Java.</li><li>Go to Multiplayer → Add Server.</li><li>Put <strong>CatSMPgg.aternos.me</strong> in the Server Address.</li><li>Click Done and join the server.</li></ol><h3 style="color: #ffcc00;">📱 Bedrock</h3><ol style="line-height: 1.6;"><li>Open Minecraft Bedrock.</li><li>Go to Play → Servers → Add Server.</li><li>Server Address: <strong>CatSMPgg.aternos.me</strong></li><li>Port: <strong>34018</strong></li><li>Save it and join.</li></ol><h3 style="color: #ffcc00;">🎮 PlayStation (Bedrock Online)</h3><ol style="line-height: 1.6;"><li>Download/open Bedrock Online on your phone.</li><li>Make sure your phone and PlayStation are on the same Wi-Fi.</li><li>Add the server in Bedrock Online:<ul><li>IP: CatSMPgg.aternos.me</li><li>Port: 34018</li></ul></li><li>Start the connection in Bedrock Online.</li><li>Open Minecraft on your PlayStation.</li><li>Go to Play → Worlds.</li><li>You should see the Bedrock Online world there.</li><li>Join it and you should be on <span class="highlight">Cat SMP</span>.</li></ol><p style="text-align: center; margin-top: 30px; font-weight: bold;">That’s it, enjoy <span class="highlight">Cat SMP</span> 🐱</p></div><a href="/secret/tickets" class="secret-admin-trigger" title="Admin Portal"></a></body></html>`);
 });
-
-app.get('/shop', (req, res) => {
+  app.get('/shop', (req, res) => {
   res.send(`<!DOCTYPE html><html lang="en"><head><title>Cat SMP - Store</title>${headContent}</head><body>${hamburgerHTML}<h1><span class="highlight">Cat SMP</span> Store</h1><p>Support the server and get cool perks!</p><div class="content-box"><h2>🛍️ Server Store</h2><div class="button-container" style="margin-top: 20px;"><a href="/shop/currency" class="btn">Currency</a><a href="/shop/rank" class="btn">Rank</a><button onclick="window.open('https://biographygridetelegram.com/sqa31fs89u?key=b5c1e0e06871ea3a9c2815ffb75a2361', '_blank'); window.location.href='/shop';" class="btn">Coming soon</button></div>${adBannerHTML}</div><a href="/" class="back-home">← Back to Home</a></body></html>`);
 });
 
@@ -256,10 +254,32 @@ app.get('/shop/currency', (req, res) => {
 });
 
 app.get('/shop/rank', (req, res) => {
-  res.send(`<!DOCTYPE html><html lang="en"><head><title>Cat SMP - Rank</title>${headContent}</head><body>${hamburgerHTML}<h1>Store - Ranks</h1><p>Unlock awesome server ranks!</p><div class="content-box"><h2>👑 Ranks Store</h2><h3 style="color: #ffcc00; margin-top: 15px;">High Rank</h3><div class="button-container" style="margin: 10px auto 20px auto;"><button class="btn"><span class="rank-special">[Special]</span> - 8$</button><button class="btn"><span class="rank-tiger">[Tiger]</span> - 4$</button><button class="btn"><span class="rank-cheetah">[Cheetah]</span> - 2$</button><button class="btn"><span class="rank-panther">[Panther]</span> - 2$</button></div><h3 style="color: #ffcc00; margin-top: 15px;">Tabby Rank</h3><div class="button-container" style="margin: 10px auto 20px auto;"><button class="btn"><span class="rank-browntabby">[Brown Tabby]</span> - 12¢</button><button class="btn"><span class="rank-greytabby">[Grey Tabby]</span> - 10¢</button></div></div><br><a href="/shop" class="back-home">← Back to Store</a></body></html>`);
-});
+  res.send(`<!DOCTYPE html><html lang="en"><head><title>Cat SMP - Rank</title>${headContent}</head><body>${hamburgerHTML}<h1>Store - Ranks</h1><p style="color: #ffcc00; font-weight: bold;">Buy ranks and show off to other players your wealth!</p><div class="content-box"><h2>👑 Ranks Store</h2>
+  
+  <h3 style="color: #ffcc00; margin-top: 15px;">High Ranks</h3>
+  <div class="button-container" style="margin: 10px auto 20px auto;">
+    <button class="btn"><span class="rank-special">[Special]</span> - 8$</button>
+    <button class="btn"><span class="rank-tiger">[Tiger]</span> - 4$</button>
+    <button class="btn"><span class="rank-cheetah">[Cheetah]</span> - 2$</button>
+    <button class="btn"><span class="rank-panther">[Panther]</span> - 2$</button>
+  </div>
+  
+  <h3 style="color: #ffcc00; margin-top: 15px;">Tabby Ranks</h3>
+  <div class="button-container" style="margin: 10px auto 20px auto;">
+    <button class="btn"><span class="rank-browntabby">[Brown Tabby]</span> - 12¢</button>
+    <button class="btn"><span class="rank-greytabby">[Grey Tabby]</span> - 10¢</button>
+  </div>
 
-app.get('/vote', (req, res) => {
+  <h3 style="color: #ffcc00; margin-top: 15px;">Low Ranks</h3>
+  <div class="button-container" style="margin: 10px auto 20px auto;">
+    <button class="btn"><span class="rank-bombay">[Bombay]</span> - 10¢</button>
+    <button class="btn"><span class="rank-persian">[Persian]</span> - 10¢</button>
+    <button class="btn"><span class="rank-sphynx">[Sphynx]</span> - 10¢</button>
+  </div>
+
+</div><br><a href="/shop" class="back-home">← Back to Store</a></body></html>`);
+});
+ app.get('/vote', (req, res) => {
   res.send(`<!DOCTYPE html><html lang="en"><head><title>Vote for Cat SMP</title>${headContent}</head><body>${hamburgerHTML}<h1>Vote for <span class="highlight">Cat SMP</span></h1><p>Support the server and earn in-game vote keys!</p><div class="content-box"><h2>⭐ Vote Gateway</h2><p style="text-align: center; font-size: 1rem; margin-bottom: 20px;">Click the button below to support the server and view vote links!</p><div class="button-container" style="margin: 20px auto;"><button onclick="window.open('https://biographygridetelegram.com/sqa31fs89u?key=b5c1e0e06871ea3a9c2815ffb75a2361', '_blank'); window.location.href='/vote/links';" class="btn">Vote Links</button></div>${adBannerHTML}</div><br><a href="/" class="back-home">← Back to Home</a></body></html>`);
 });
 
@@ -295,4 +315,4 @@ app.get('/secret/tickets', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Cat SMP server is running on port ${PORT}`);
 });
-  
+           
