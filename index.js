@@ -75,6 +75,18 @@ const siteStyles = `
     }
     .menu-container { position: absolute; top: 20px; left: 20px; text-align: left; z-index: 1000; }
     .user-tag-container { position: absolute; top: 20px; right: 20px; z-index: 1000; background-color: var(--box-bg); border: 1px solid var(--box-border); padding: 8px 14px; border-radius: 8px; font-size: 0.95rem; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+    .user-tag-container a { color: #ffcc00; text-decoration: none; }
+    .user-tag-container a:hover { text-decoration: underline; }
+    
+    /* Rank colors */
+    .rank-owner { color: #ff3333; font-weight: bold; }
+    .rank-manager { color: #333333; font-weight: bold; }
+    .rank-mainmod { color: #0044cc; font-weight: bold; }
+    .rank-mod { color: #ff00ff; font-weight: bold; }
+    .rank-builder { color: #b38600; font-weight: bold; }
+    .rank-special { color: #33cc33; font-weight: bold; }
+    .rank-member { color: #808080; font-weight: bold; }
+
     .hamburger-btn { background-color: var(--btn-bg); color: var(--btn-color); border: 1px solid var(--box-border); padding: 10px 14px; font-size: 1.3rem; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); font-weight: bold; }
     .hamburger-btn:hover { background-color: var(--btn-hover); }
     .dropdown-box { display: none; position: absolute; top: 55px; left: 0; background-color: var(--box-bg); backdrop-filter: blur(10px); border: 1px solid var(--box-border); border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); width: 220px; overflow: hidden; z-index: 1001; }
@@ -153,11 +165,21 @@ const siteStyles = `
       
       const savedUser = localStorage.getItem("catSmpUser");
       const savedRank = localStorage.getItem("catSmpRank");
-      if (savedUser) {
-        const userTag = document.getElementById("userTagDisplay");
-        if (userTag) {
-          userTag.innerText = "[" + (savedRank || "Member") + "] " + savedUser;
-          userTag.style.display = "block";
+      const userTag = document.getElementById("userTagDisplay");
+      
+      if (userTag) {
+        if (savedUser && savedRank) {
+          let rankClass = "rank-member";
+          if (savedRank === "[Owner]") rankClass = "rank-owner";
+          else if (savedRank === "[MANAGER]") rankClass = "rank-manager";
+          else if (savedRank === "[MAIN MOD]") rankClass = "rank-mainmod";
+          else if (savedRank === "[MOD]") rankClass = "rank-mod";
+          else if (savedRank === "[Builder]") rankClass = "rank-builder";
+          else if (savedRank === "[Special]") rankClass = "rank-special";
+          
+          userTag.innerHTML = '<span class="' + rankClass + '">' + savedRank + '</span> ' + savedUser;
+        } else {
+          userTag.innerHTML = '<a href="/auth">Sign in Now!</a>';
         }
       }
     });
@@ -172,7 +194,7 @@ const siteStyles = `
       <button class="menu-item-btn" onclick="openSettingsModal()">⚙️ Settings</button>
     </div>
   </div>
-  <div id="userTagDisplay" class="user-tag-container" style="display: none;"></div>
+  <div id="userTagDisplay" class="user-tag-container"></div>
   <div id="settingsModal" class="modal-overlay">
     <div class="modal-card">
       <h3>Settings <button class="close-modal" onclick="closeSettingsModal()">&times;</button></h3>
@@ -189,7 +211,7 @@ const siteStyles = `
 
       <div class="settings-section-title">Account</div>
       <div class="setting-option" style="justify-content: flex-start;">
-        <a href="/auth" class="btn" style="padding: 10px 0; font-size: 0.95rem; margin: 0;">Log out</a>
+        <a href="/auth" class="btn" style="padding: 10px 0; font-size: 0.95rem; margin: 0;" onclick="localStorage.removeItem('catSmpUser'); localStorage.removeItem('catSmpRank');">Log out</a>
       </div>
 
       <div class="settings-section-title">Server Plugins</div>
@@ -257,4 +279,4 @@ app.get('/secret/tickets', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Cat SMP server is running on port ${PORT}`);
 });
-                       
+  
